@@ -1,0 +1,24 @@
+1)	What program are we going to create? Use your brainstorming from the solo checkpoint to answer this question together.
+    a)	The program we decided to make was a top down game where the player is put into a world where he has to fight his way through enemies from all sides.
+
+2)	What technologies will we use? The answer to this question is mostly already decided. Just take a minute to remind yourselves of the language, libraries and anything else you plan on using.
+    a)	Python/Arcade library
+
+3)	What features will we include? The goal of asking this question is to identify what will and what won't be included. Use this simple feature planning guide to help you.
+    a)	Start screen 
+    b)	End screen
+    c)	increasing difficulty
+    d)	Endless game
+    e)	Different enemies
+    f)	Boss levels
+    g)	Score display
+    h)	Life display
+    i)	Power ups
+    j)	Collision detection
+    k)	projectiles
+
+4)	What is your timeline? The answer to this question is mostly already decided. Just take a minute to review the rest of the course schedule together.
+    a)	WK 1 –score display, life display, player movement, non-animated enemies, collision detection, projectiles
+    b)	WK 2 – animations for players and enemies, help screen, multiple types of enemies, increasing difficulty
+    c)	WK 3 – start/end screens, power ups, boss levels
+    d)	WK 4 – bug testing
