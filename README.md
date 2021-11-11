@@ -10,3 +10,4 @@
 * # TODO: Add your names and emails here
 
 Ethan Tolson - tol18009@byui.edu
+Jace Wilderman - jwilderman@byui.edu
