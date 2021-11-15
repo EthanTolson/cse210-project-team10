@@ -17,7 +17,6 @@ class Director(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_lrtb_rectangle_filled(0, 0, 1000, 1000, arcade.color.RAZZLE_DAZZLE_ROSE)
         self.allSprites.draw()
 
     def on_key_press(self, symbol: int, modifiers: int):
