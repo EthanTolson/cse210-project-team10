@@ -27,7 +27,6 @@ class Director(arcade.View):
 
     def setup(self):
         self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG.png", const.SCALING)
-        print("Success")
         self.player.center_x = 100
         self.player.center_y = 200
         self.playerSprite.append(self.player)
