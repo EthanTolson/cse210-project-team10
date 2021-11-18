@@ -12,4 +12,4 @@ class EnemySprite(arcade.Sprite):
         return self.hitPoints
 
     def onHit(self):
-        pass
+        self.hitPoints -= 1
