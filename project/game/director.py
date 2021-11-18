@@ -9,7 +9,7 @@ from game.spritehealth import SpriteHealth
 
 HEALTHBAR_WIDTH = 50
 HEALTHBAR_HEIGHT = 6
-HEALTHBAR_OFFSET_Y = -10
+HEALTHBAR_OFFSET_Y = -50
 
 HEALTH_NUMBER_OFFSET_Y = -50
 
@@ -40,20 +40,18 @@ class Director(arcade.View):
                             start_y=enemySprite.center_y + HEALTH_NUMBER_OFFSET_Y,
                             font_size=12,
                             color=arcade.color.WHITE)
+            health_width = HEALTHBAR_WIDTH * (enemySprite.getEnemyHealth() / 3)
+            arcade.draw_rectangle_filled(center_x=enemySprite.center_x - 0.5 * (HEALTHBAR_WIDTH - health_width),
+                                    center_y=enemySprite.center_y - 10,
+                                    width=health_width,
+                                    height=HEALTHBAR_HEIGHT,
+                                    color=arcade.color.GREEN)
             if enemySprite.getEnemyHealth() < 3:
                 arcade.draw_rectangle_filled(center_x=enemySprite.center_x,
                                             center_y=enemySprite.center_y + HEALTHBAR_OFFSET_Y,
                                             width=HEALTHBAR_WIDTH,
                                             height=3,
                                             color=arcade.color.RED)
-
-            health_width = HEALTHBAR_WIDTH * (enemySprite.getEnemyHealth() / 3)
-
-            arcade.draw_rectangle_filled(center_x=enemySprite.center_x - 0.5 * (HEALTHBAR_WIDTH - health_width),
-                                    center_y=enemySprite.center_y - 10,
-                                    width=health_width,
-                                    height=HEALTHBAR_HEIGHT,
-                                    color=arcade.color.GREEN)
 
 
         arcade.draw_text(f"Score: {self.score}", 10, 20, arcade.color.WHITE, 14)
