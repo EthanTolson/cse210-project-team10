@@ -1,28 +1,34 @@
 import arcade
+import math
 
 class ProjectileSprite(arcade.Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
-        self.destinaion = ""
-        self.speed = 100 # change as needed, 100 is not a special number
+        self.positionUsedX = None
+        self.positionUsedY = None
         self.enemySprites = None
-        #vector is made from source, destination, and speed.
+        
 
     def update(self):
-        super().__init__()
+        super().update()
+        if math.sqrt((self.positionUsedY - self.center_y)**2 + (self.positionUsedX - self.center_x)**2) > 600:
+            self.remove_from_sprite_lists()
 
-        # moves according to vecto
+        collisionList = self.collides_with_list(self.enemySprites)
 
-        # executes onHit() if it hits something
-        if self.collides_with_list(self.enemySprites):
+        if len(collisionList) != 0:
+            collisionList[0].onHit()
             self.onHit()
 
     def onHit(self):
         """
         deletes projectile
         """
-
         self.remove_from_sprite_lists()
 
-    def set_enemysprites(self, enemylist):
-        self.enemySprites = enemylist
+    def setPositionUsed(self, x, y):
+        self.positionUsedX = x
+        self.positionUsedY = y
+
+    def setEnemySprites(self, enemySprites):
+        self.enemySprites = enemySprites

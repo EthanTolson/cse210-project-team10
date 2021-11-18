@@ -7,9 +7,14 @@ class EnemySprite(arcade.Sprite):
         
     def update(self):
         super().update()
+        if self.hitPoints <= 0:
+            self.remove_from_sprite_lists()
 
-    def getEnemyHealth(self):
+    def getHealth(self):
         return self.hitPoints
+
+    def getMaxHealth(self):
+        return 3
 
     def onHit(self):
         self.hitPoints -= 1
