@@ -7,6 +7,12 @@ from game.enemysprite import EnemySprite
 from game.projectile import ProjectileSprite
 from game.spritehealth import SpriteHealth
 
+HEALTHBAR_WIDTH = 50
+HEALTHBAR_HEIGHT = 6
+HEALTHBAR_OFFSET_Y = -10
+
+HEALTH_NUMBER_OFFSET_Y = -50
+
 class Director(arcade.View):
     def __init__(self):
         super().__init__()
@@ -22,26 +28,36 @@ class Director(arcade.View):
         if len(self.enemySprites) == 0:
             self.level += 1
             self.spawnEnemies()
+            self.player.setEnemySprites(self.enemySprites)
 
 
     def on_draw(self):
         arcade.start_render()
-<<<<<<< HEAD
-        self.enemySprites_list.draw()
-        self.player_list.draw()
+        for enemySprite in self.enemySprites:
+            health_string = f"{enemySprite.getEnemyHealth()}/{3}"
+            arcade.draw_text(health_string,
+                            start_x=enemySprite.center_x,
+                            start_y=enemySprite.center_y + HEALTH_NUMBER_OFFSET_Y,
+                            font_size=12,
+                            color=arcade.color.WHITE)
+            if enemySprite.getEnemyHealth() < 3:
+                arcade.draw_rectangle_filled(center_x=enemySprite.center_x,
+                                            center_y=enemySprite.center_y + HEALTHBAR_OFFSET_Y,
+                                            width=HEALTHBAR_WIDTH,
+                                            height=3,
+                                            color=arcade.color.RED)
 
-        for enemySprites in self.enemySprites_list:
-            enemySprites.draw_health_number()
-            enemySprites.draw_health_bar()
+            health_width = HEALTHBAR_WIDTH * (enemySprite.getEnemyHealth() / 3)
 
-        for playerSprite in self.playerSprite_list:
-            playerSprite.draw_health_number()
-            playerSprite.draw_health_bar()
+            arcade.draw_rectangle_filled(center_x=enemySprite.center_x - 0.5 * (HEALTHBAR_WIDTH - health_width),
+                                    center_y=enemySprite.center_y - 10,
+                                    width=health_width,
+                                    height=HEALTHBAR_HEIGHT,
+                                    color=arcade.color.GREEN)
+
 
         arcade.draw_text(f"Score: {self.score}", 10, 20, arcade.color.WHITE, 14)
-=======
         self.camera_sprites.use()
->>>>>>> d80565dcb114435352876c8cee50920a1dcca258
         self.allSprites.draw()
 
     def on_key_press(self, symbol: int, modifiers: int):
@@ -70,7 +86,7 @@ class Director(arcade.View):
 
     def spawnEnemies(self):
         for i in range(0, 10 * self.level):
-            self.enemy = PlayerSprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
+            self.enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
             self.enemy.center_x = random.randint(0, 1000)
             self.enemy.center_y = random.randint(0, 1000)
             self.enemySprites.append(self.enemy)
@@ -81,18 +97,6 @@ class Director(arcade.View):
         self.player.center_x = 100
         self.player.center_y = 200
         self.score = 0
-        self.playerSprite.append(self.player)
-<<<<<<< HEAD
+        self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
 
-        self.enemy = EnemySprite(const.RESOURCE_PATH + "enemySpritesPNG.png", const.SCALING)
-        self.enemy.center_x = 400
-        self.enemy.center_y = 200
-        self.enemySprites.append(self.enemy)
-        self.allSprites.append(self.enemy)
-
-
-        
-=======
-        self.allSprites.append(self.player)
->>>>>>> d80565dcb114435352876c8cee50920a1dcca258
