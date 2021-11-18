@@ -8,12 +8,14 @@ class PlayerSprite(arcade.Sprite):
         self.enemySprites = None
         self.collision = False
 
-    def update(self, enemySpriteList):
+    def update(self):
         super().update()
-        self.enemySprites = enemySpriteList
         self.collision = arcade.check_for_collision_with_list(self.enemySprites)
         if(self.collision == True):
            self.onHit()
+
+    def enemySpriteList(self, enemy_sprite_list):
+        self.enemySprites = enemy_sprite_list
 
     def onHit(self):
         self.player_hp -= 1
