@@ -10,7 +10,7 @@ class PlayerSprite(arcade.Sprite):
 
     def update(self):
         super().update()
-        self.collision = arcade.check_for_collision_with_list(self.enemySprites)
+        self.collision = self.collides_with_list(self.enemySprites)
         if(self.collision == True):
            self.onHit()
 
