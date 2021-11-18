@@ -13,3 +13,4 @@ Ethan Tolson - tol18009@byui.edu
 Jace Wilderman - jwilderman@byui.edu
 Dawsin Miskin - miskindr13@gmail.com
 Austin Eldredge - eld20009@byui.edu
+Stephen Nielsen - snielsen256@byui.edu
