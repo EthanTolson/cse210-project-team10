@@ -1,5 +1,14 @@
 import arcade
 import math
+"""
+Projectile Class:
+Subclass of Arcade Sprite. Used for Projectiles.
+
+Attributes:
+    positionUsedX (INT) X Position that the projectile was spawned
+    positionUsedY (INT) Y Position that the projectile was spawned
+    enemySprites (SpriteList) List of enemy sprites
+"""
 
 class ProjectileSprite(arcade.Sprite):
     def __init__(self, filename, scaling):

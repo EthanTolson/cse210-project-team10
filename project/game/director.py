@@ -5,6 +5,20 @@ from game import constants as const
 from game.playerSprite import PlayerSprite
 from game.enemysprite import EnemySprite
 from game.projectile import ProjectileSprite
+"""
+Director Class:
+Class that hanldes the main game view. Inherits from Arcade View.
+
+Attributes:
+    playerSprite (SpriteList) The Player Sprite used for collision methods
+    enemySprites (SpriteList) List of all enemysprite objects
+    projectileSprites (SpriteList) List of all projectilesprite objects
+    allSprites (SpriteList) List of All Non Camera Sprites
+    camera_sprites (Camera Sprite) Handles the camera sprites for display
+    level (INT) Stores the current Leve as an INT
+    lastEventX (INT) Stores the x value of the last mouse movement click
+    lastEventY (INT) Stores the x value of the last mouse movement click
+"""
 
 class Director(arcade.View):
     def __init__(self):

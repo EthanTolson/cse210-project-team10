@@ -1,5 +1,13 @@
 import arcade
 import math
+"""
+EnemySprite Class:
+Subclass of Arcade Sprite. Used for Enemies.
+
+Attributes:
+    hitPoints (INT) The current health of enemy
+    player (PlayerSprite) Sprite object for player
+"""
 
 class EnemySprite(arcade.Sprite):
     def __init__(self, filename, scaling):

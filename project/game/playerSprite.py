@@ -1,5 +1,18 @@
 import arcade
 import time
+"""
+PlayerSprite Class:
+Subclass of Arcade Sprite. Used for the Player.
+
+Attributes:
+    player_hp (INT) The player's current health
+    enemySprites (SpriteList) List of enemy sprites
+    collision (SpriteList) List of EnemySprites that are currently colliding with player sprite
+    lastEventX (INT) X Position of the last movement command
+    lastEventY (INT) Y Position of the last movement command
+    hitCount (int) Number of hits the player has taken used to make sure player gets hit on first hit
+    starttime (Float) Time.time() the time of the last collision with enemy
+"""
 
 class PlayerSprite(arcade.Sprite):
 
