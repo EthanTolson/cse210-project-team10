@@ -102,6 +102,7 @@ class Director(arcade.View):
         """
         x = x + self.player.center_x - self.window.width/2
         y = y + self.player.center_y - self.window.height/2
+        self.player.angle = math.atan2(y - self.player.center_y, x - self.player.center_x) * 180 / math.pi
         
         if button == arcade.MOUSE_BUTTON_RIGHT:
             #You will see a similar line of code in many other places
