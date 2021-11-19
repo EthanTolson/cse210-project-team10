@@ -42,7 +42,7 @@ class Director(arcade.View):
             self.level += 1
             self.spawnEnemies()
             self.player.setEnemySprites(self.enemySprites)
-            if self.level > 10:
+            if self.level > 11:
                 arcade.close_window()
         
 
