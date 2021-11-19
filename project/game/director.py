@@ -15,6 +15,8 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.level = 0
+        self.lastEventX = 0
+        self.lastEventY = 0
 
     def on_update(self, delta_time: float):       
         self.allSprites.update()
@@ -34,6 +36,7 @@ class Director(arcade.View):
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)
+        arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.WHITE, 20)
         self.camera_sprites.use()
         self.allSprites.draw()
         
@@ -72,6 +75,9 @@ class Director(arcade.View):
             self.player.change_y = 7 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
             self.player.lastEventX = x
             self.player.lastEventY = y
+            self.lastEventY = y
+            self.lastEventX = x
+
 
         if button == arcade.MOUSE_BUTTON_LEFT:
             self.spawnProjectiles(x, y)
@@ -86,17 +92,19 @@ class Director(arcade.View):
 
     def spawnEnemies(self):
         if self.level <= 10:
-            for i in range(0, 10 * self.level):
+            for i in range(0, 5 * self.level):
                 if i % 2:
                     self.enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
                     self.enemy.center_x = random.randint(0, 1000)
                     self.enemy.center_y = random.randrange(0, 3001, 3000)
+                    self.enemy.setPlayer(self.player)
                     self.enemySprites.append(self.enemy)
                     self.allSprites.append(self.enemy)
                 else:
                     self.enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
                     self.enemy.center_x = random.randrange(0, 3001, 3000)
                     self.enemy.center_y = random.randint(0, 1000)
+                    self.enemy.setPlayer(self.player)
                     self.enemySprites.append(self.enemy)
                     self.allSprites.append(self.enemy)
                 
