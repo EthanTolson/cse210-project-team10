@@ -36,7 +36,7 @@ class Director(arcade.View):
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)
-        arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.WHITE, 20)
+        arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.WHITE, 10)
         self.camera_sprites.use()
         self.allSprites.draw()
         
