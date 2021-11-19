@@ -32,7 +32,10 @@ class Director(arcade.View):
         self.lastEventX = 0
         self.lastEventY = 0
 
-    def on_update(self, delta_time: float):       
+    def on_update(self, delta_time: float):
+        """
+        Updates the sprites positions also spawns enemies if there are none
+        """ 
         self.allSprites.update()
         self.scroll_to_player()
         if len(self.enemySprites) == 0:
@@ -42,6 +45,9 @@ class Director(arcade.View):
 
 
     def on_draw(self):
+        """
+        Draws sprites to screen, also draws health bars and mouse clicks
+        """
         arcade.start_render()
         for enemySprite in self.enemySprites:            
             self.drawHealthBars(enemySprite)
@@ -55,6 +61,9 @@ class Director(arcade.View):
         self.allSprites.draw()
         
     def drawHealthBars(self, sprite):
+        """
+        Method for drawing health bars above enemies and player separated from on draw due to reusability
+        """
         health_width = const.HEALTHBAR_WIDTH * (sprite.getHealth() / sprite.getMaxHealth())
         if sprite.getHealth() < sprite.getMaxHealth():
             arcade.draw_rectangle_filled(center_x = sprite.center_x,
@@ -75,16 +84,27 @@ class Director(arcade.View):
                     color=arcade.color.WHITE, anchor_x="center")
 
     def on_key_press(self, symbol: int, modifiers: int):
+        """
+        Checks for key presses and does corresponding action
+        """
         if symbol == arcade.key.F:
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
             arcade.close_window()
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
+        """
+        Checks for mouse clicks for movement updates player velocity 
+        Also checks for mouse clicks for projectiles
+        """
         x = x + self.player.center_x - self.window.width/2
         y = y + self.player.center_y - self.window.height/2
         
         if button == arcade.MOUSE_BUTTON_RIGHT:
+            #You will see a similar line of code in many other places
+            #in order to keep the velocity consistent despite player moevment direction we take the 
+            # distance between the x values of the click and divide by the distance to that point on the screen
+            # this ensures that your character moves the same distance over the same amount of time no matter the direction they are moving
             self.player.change_x = 7 * ((x- self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
             self.player.change_y = 7 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
             self.player.lastEventX = x
@@ -92,19 +112,28 @@ class Director(arcade.View):
             self.lastEventY = y
             self.lastEventX = x
 
-
+        #Spawns the projectiles
         if button == arcade.MOUSE_BUTTON_LEFT:
             self.spawnProjectiles(x, y)
 
     def scroll_to_player(self):
+        """
+        Moves the camera center to the player to ensure player does not move off screen
+        """
         position = self.player.center_x - self.window.width / 2, \
             self.player.center_y - self.window.height / 2
         self.camera_sprites.move_to(position, 1)
 
     def on_resize(self, width: int, height: int):
+        """
+        Ensures camera works if user resizes screen
+        """
         self.camera_sprites.resize(int(width), int(height))
 
     def spawnEnemies(self):
+        """
+        Used to spawn enemies based on the level the player is on
+        """
         if self.level <= 10:
             for i in range(0, 5 * self.level):
                 if i % 2:
@@ -124,6 +153,10 @@ class Director(arcade.View):
                 
 
     def spawnProjectiles(self, x, y):
+        """
+        Spawns projectiles
+        creates projectile objects and saves them to sprite lists
+        """
         self.projectile = ProjectileSprite(const.RESOURCE_PATH + "projectilePNG.png", 1/8 * const.SCALING)
         self.projectile.setPositionUsed(self.player.center_x, self.player.center_y)
         self.projectile.setEnemySprites(self.enemySprites)
@@ -135,6 +168,10 @@ class Director(arcade.View):
         self.allSprites.append(self.projectile)
        
     def setup(self):
+        """
+        Setup for before first update cycle
+        creates the player object
+        """
         self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG.png", const.SCALING) 
         self.player.center_x = 1500
         self.player.center_y = 1500
