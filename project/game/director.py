@@ -65,7 +65,7 @@ class Director(arcade.View):
         
     def drawHealthBars(self, sprite):
         """
-        Method for drawing health bars above enemies and player separated from on draw due to reusability
+        Method for drawing health bars above enemies and player separated from on draw due to being repeated
         """
         health_width = const.HEALTHBAR_WIDTH * (sprite.getHealth() / sprite.getMaxHealth())
         if sprite.getHealth() < sprite.getMaxHealth():
