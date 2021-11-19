@@ -38,10 +38,13 @@ class Director(arcade.View):
         """ 
         self.allSprites.update()
         self.scroll_to_player()
-        if len(self.enemySprites) == 0:
+        if len(self.enemySprites) == 0 and self.level < 13:
             self.level += 1
             self.spawnEnemies()
             self.player.setEnemySprites(self.enemySprites)
+            if self.level > 10:
+                arcade.close_window()
+        
 
 
     def on_draw(self):
