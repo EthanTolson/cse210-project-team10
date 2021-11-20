@@ -142,7 +142,7 @@ class Director(arcade.View):
             for i in range(0, 5 * self.level):
                 if i % 2:
                     self.enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
-                    self.enemy.center_x = random.randint(0, 1000)
+                    self.enemy.center_x = random.randint(0, 3000)
                     self.enemy.center_y = random.randrange(0, 3001, 3000)
                     self.enemy.setPlayer(self.player)
                     self.enemySprites.append(self.enemy)
@@ -150,11 +150,10 @@ class Director(arcade.View):
                 else:
                     self.enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
                     self.enemy.center_x = random.randrange(0, 3001, 3000)
-                    self.enemy.center_y = random.randint(0, 1000)
+                    self.enemy.center_y = random.randint(0, 3000)
                     self.enemy.setPlayer(self.player)
                     self.enemySprites.append(self.enemy)
                     self.allSprites.append(self.enemy)
-                
 
     def spawnProjectiles(self, x, y):
         """
