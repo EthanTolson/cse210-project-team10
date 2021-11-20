@@ -164,8 +164,10 @@ class Director(arcade.View):
         self.projectile = ProjectileSprite(const.RESOURCE_PATH + "projectilePNG.png", 1/8 * const.SCALING)
         self.projectile.setPositionUsed(self.player.center_x, self.player.center_y)
         self.projectile.setEnemySprites(self.enemySprites)
-        self.projectile.center_x = self.player.center_x
-        self.projectile.center_y = self.player.center_y
+        
+        self.projectile.center_x = self.player.center_x + math.sin(math.pi/180 * (self.player.angle + 45.8550973963)) * 33.54 # Calculates the offset for the bullet to shoot out of the gun
+        self.projectile.center_y = self.player.center_y - math.cos(math.pi/180 * (self.player.angle + 45.8550973963)) * 33.54 # Calculates the offset for the bullet to shoot out of the gun
+    
         self.projectile.change_x = 20 * ((x - self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
         self.projectile.change_y = 20 * ((y - self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
         self.projectileSprites.append(self.projectile)
