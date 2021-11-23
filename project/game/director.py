@@ -28,6 +28,7 @@ class Director(arcade.View):
         self.projectileSprites = arcade.SpriteList()
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
+        self.tileMap = None
         self.level = 0
         self.lastEventX = 0
         self.lastEventY = 0
@@ -37,6 +38,7 @@ class Director(arcade.View):
         """
         Updates the sprites positions also spawns enemies if there are none
         """ 
+        self.physicsEngine.update()
         self.allSprites.update()
         self.scroll_to_player()
         if len(self.enemySprites) == 0 and self.level < 13:
@@ -53,6 +55,7 @@ class Director(arcade.View):
         Draws sprites to screen, also draws health bars and mouse clicks
         """
         arcade.start_render()
+        self.scene.draw()
         for enemySprite in self.enemySprites:            
             self.drawHealthBars(enemySprite)
         self.drawHealthBars(self.playerSprite[0])
@@ -123,8 +126,8 @@ class Director(arcade.View):
             #in order to keep the velocity consistent despite player moevment direction we take the 
             # distance between the values of the click and divide by the distance to that point on the screen
             # this ensures that your character moves the same distance over the same amount of time no matter the direction they are moving
-            self.player.change_x = 7 * ((x- self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
-            self.player.change_y = 7 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
+            self.player.change_x = 3.5 * ((x- self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
+            self.player.change_y = 3.5 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
             self.player.lastEventX = x
             self.player.lastEventY = y
             self.lastEventY = y
@@ -197,5 +200,18 @@ class Director(arcade.View):
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
-
+        mapName = const.RESOURCE_PATH + "background.json"
+        layer_options = {
+            "walls": {
+                "use_spatial_hash": True,
+            },
+            "obstacles":
+            {
+                "use_spacial_hash": True,
+            }
+        }
+        self.tileMap = arcade.load_tilemap(mapName, 1, layer_options)
+        
+        self.scene = arcade.Scene.from_tilemap(self.tileMap)
+        self.physicsEngine = arcade.PhysicsEngineSimple(self.player, self.scene["walls"])
     

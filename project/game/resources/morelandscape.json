@@ -1,0 +1,14 @@
+{ "columns":36,
+ "image":"..\/..\/..\/..\/..\/..\/Pictures\/VideoGame Resources\/kenney_racingpack_updated\/Spritesheets\/spritesheet_tiles.png",
+ "imageheight":2304,
+ "imagewidth":2304,
+ "margin":0,
+ "name":"morelandscape",
+ "spacing":0,
+ "tilecount":1296,
+ "tiledversion":"1.7.2",
+ "tileheight":64,
+ "tilewidth":64,
+ "type":"tileset",
+ "version":"1.6"
+}
