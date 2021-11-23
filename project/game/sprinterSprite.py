@@ -4,18 +4,18 @@ import time
 
 from arcade.color import HELIOTROPE
 """
-EnemySprite Class:
-Subclass of Arcade Sprite. Used for Enemies.
+SprinterSprite Class:
+Subclass of Arcade Sprite. Used for Sprinter Enemies.
 
 Attributes:
     hitPoints (INT) The current health of enemy
     player (PlayerSprite) Sprite object for player
 """
 
-class EnemySprite(arcade.Sprite):
+class SprinterSprite(arcade.Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
-        self.hitPoints = 3
+        self.hitPoints = 2
         self.player = None
         
     def update(self):
@@ -31,7 +31,7 @@ class EnemySprite(arcade.Sprite):
         return self.hitPoints
 
     def getMaxHealth(self):
-        return 3
+        return 2
 
     def onHit(self):
         self.hitPoints -= 1
