@@ -106,7 +106,7 @@ class Director(arcade.View):
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.TAB:
-            self.bool = not self.bool
+            self.help_bool = not self.help_bool
 
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):

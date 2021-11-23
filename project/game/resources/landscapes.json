@@ -1,0 +1,14 @@
+{ "columns":54,
+ "image":"..\/..\/..\/..\/..\/..\/Pictures\/VideoGame Resources\/topdown-shooter\/Tilesheet\/tilesheet_complete_2X.png",
+ "imageheight":2560,
+ "imagewidth":3456,
+ "margin":0,
+ "name":"landscapes",
+ "spacing":0,
+ "tilecount":2160,
+ "tiledversion":"1.7.2",
+ "tileheight":64,
+ "tilewidth":64,
+ "type":"tileset",
+ "version":"1.6"
+}
