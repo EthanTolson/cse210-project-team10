@@ -31,6 +31,7 @@ class Director(arcade.View):
         self.level = 0
         self.lastEventX = 0
         self.lastEventY = 0
+        self.help_bool = False
 
     def on_update(self, delta_time: float):
         """
@@ -60,8 +61,14 @@ class Director(arcade.View):
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)
         arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.GRAPE, 10)
+        if self.help_bool == True:
+            arcade.draw_text(f"right click to move, left click to shoot, normal zombies are average speed and normal health, sprinter zombies are fast and have less health, heavy zombies have more health but are slower",
+            self.player.center_x,
+            self.player.center_y,
+            arcade.color.WHITE, 14)
         self.camera_sprites.use()
         self.allSprites.draw()
+        
         
     def drawHealthBars(self, sprite):
         """
@@ -94,6 +101,13 @@ class Director(arcade.View):
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
             arcade.close_window()
+        elif symbol == arcade.key.TAB:
+            self.help_bool = True
+
+    def on_key_release(self, symbol: int, modifiers: int):
+        if symbol == arcade.key.TAB:
+            self.bool = not self.bool
+
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         """
@@ -184,3 +198,4 @@ class Director(arcade.View):
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
 
+    
