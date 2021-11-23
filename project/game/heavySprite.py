@@ -1,8 +1,8 @@
 import arcade
 import math
 """
-EnemySprite Class:
-Subclass of Arcade Sprite. Used for Enemies.
+HeavySprite Class:
+Subclass of Arcade Sprite. Used for Heavy Enemies.
 
 Attributes:
     hitPoints (INT) The current health of enemy

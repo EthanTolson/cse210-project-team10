@@ -4,8 +4,8 @@ import time
 
 from arcade.color import HELIOTROPE
 """
-EnemySprite Class:
-Subclass of Arcade Sprite. Used for Enemies.
+SprinterSprite Class:
+Subclass of Arcade Sprite. Used for Sprinter Enemies.
 
 Attributes:
     hitPoints (INT) The current health of enemy
