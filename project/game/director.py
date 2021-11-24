@@ -31,7 +31,7 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 10
+        self.level = 0
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -46,7 +46,7 @@ class Director(arcade.View):
             self.physicsEngine.update()
             self.allSprites.update()
             self.scroll_to_player()
-            if len(self.enemySprites) == 0 and self.level < 13:
+            if len(self.enemySprites) == 0 and self.level < 1003:
                 self.level += 1
                 self.spawnEnemies()
                 self.player.setEnemySprites(self.enemySprites)
@@ -169,28 +169,35 @@ class Director(arcade.View):
             if self.level % 30 == 0 or self.level % 50 == 0 and self.level > 0:
                 pass
             elif self.level > 5 and self.level % 3 == 0:
-                for i in range(0, 3 * self.level):
-                    if i + self.level * 2 / 5 >= 3 * self.level:
+                for i in range(0, int(self.level / 3)):
+                    if len(self.enemySprites) <= 45:
                         self.spawnSprinter()
-                    elif i % 2:
+                
+                for i in range(0, 3 * self.level):   
+                    if len(self.enemySprites) <= 45:           
                         if i % 2:
                             self.spawnZombieTB()
                         else:
                             self.spawnZombieLR()
-            elif self.level > 10 and self.level % 5:
+
+            elif self.level > 10 and self.level % 5 == 0:
                 for i in range(0, int(self.level/5)):
-                    self.spawnHeavy()
-                    for i in range(0, 10):
-                        if i % 2:
-                            self.spawnZombieTB()
-                        else:
-                            self.spawnZombieLR()
+                    if len(self.enemySprites) <= 45:
+                        self.spawnHeavy()
+                        for i in range(0, 10):
+                            if len(self.enemySprites) <= 45:
+                                if i % 2:
+                                    self.spawnZombieTB()
+                                else:
+                                    self.spawnZombieLR()
+
             else:
                 for i in range(0, 3 * self.level):
-                    if i % 2:
-                        self.spawnZombieTB()
-                    else:
-                        self.spawnZombieLR()
+                    if len(self.enemySprites) <= 45:
+                        if i % 2:
+                            self.spawnZombieTB()
+                        else:
+                            self.spawnZombieLR()
 
     def spawnHeavy(self):
         enemy = HeavySprite(const.RESOURCE_PATH + "heavyPNG.png", const.SCALING + 1.0) 
