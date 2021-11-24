@@ -1,6 +1,7 @@
 import arcade
 import math
 import random
+import time
 from game import constants as const
 from game.playerSprite import PlayerSprite
 from game.enemysprite import EnemySprite
@@ -31,7 +32,7 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 0
+        self.level = 994
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -60,8 +61,11 @@ class Director(arcade.View):
         arcade.start_render()
         self.scene.draw()
 
-        for enemySprite in self.enemySprites:            
-            self.drawHealthBars(enemySprite)
+        #Healthbars were causing game to lag need to find fix
+        #Fix is to only draw healthbars for enemies after they have been hit and only for 1.5 seconds after the hit
+        for enemySprite in self.enemySprites:
+            if enemySprite.getHealth() < enemySprite.getMaxHealth() and enemySprite.getLastHit() + 1.5 > time.time():
+                self.drawHealthBars(enemySprite)
 
         self.drawHealthBars(self.playerSprite[0])
 
@@ -170,11 +174,11 @@ class Director(arcade.View):
                 pass
             elif self.level > 5 and self.level % 3 == 0:
                 for i in range(0, int(self.level / 3)):
-                    if len(self.enemySprites) <= 45:
+                    if len(self.enemySprites) <= 250:
                         self.spawnSprinter()
                 
                 for i in range(0, 3 * self.level):   
-                    if len(self.enemySprites) <= 45:           
+                    if len(self.enemySprites) <= 250:           
                         if i % 2:
                             self.spawnZombieTB()
                         else:
@@ -182,10 +186,10 @@ class Director(arcade.View):
 
             elif self.level > 10 and self.level % 5 == 0:
                 for i in range(0, int(self.level/5)):
-                    if len(self.enemySprites) <= 45:
+                    if len(self.enemySprites) <= 250:
                         self.spawnHeavy()
                         for i in range(0, 10):
-                            if len(self.enemySprites) <= 45:
+                            if len(self.enemySprites) <= 250:
                                 if i % 2:
                                     self.spawnZombieTB()
                                 else:
@@ -193,7 +197,7 @@ class Director(arcade.View):
 
             else:
                 for i in range(0, 3 * self.level):
-                    if len(self.enemySprites) <= 45:
+                    if len(self.enemySprites) <= 250:
                         if i % 2:
                             self.spawnZombieTB()
                         else:
