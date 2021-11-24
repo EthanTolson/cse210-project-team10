@@ -17,6 +17,7 @@ class SprinterSprite(arcade.Sprite):
         super().__init__(filename, scaling)
         self.hitPoints = 2
         self.player = None
+        self.damage = 4
         
     def update(self):
         super().update()
@@ -32,6 +33,9 @@ class SprinterSprite(arcade.Sprite):
 
     def getMaxHealth(self):
         return 2
+
+    def getDamage(self):
+        return self.damage
 
     def onHit(self):
         self.hitPoints -= 1

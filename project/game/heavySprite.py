@@ -14,6 +14,7 @@ class HeavySprite(arcade.Sprite):
         super().__init__(filename, scaling)
         self.hitPoints = 9
         self.player = None
+        self.damage = 7
         
     def update(self):
         super().update()
@@ -28,6 +29,9 @@ class HeavySprite(arcade.Sprite):
 
     def getMaxHealth(self):
         return 9
+    
+    def getDamage(self):
+        return self.damage
 
     def onHit(self):
         self.hitPoints -= 1

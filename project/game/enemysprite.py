@@ -14,6 +14,7 @@ class EnemySprite(arcade.Sprite):
         super().__init__(filename, scaling)
         self.hitPoints = 3
         self.player = None
+        self.damage = 3
         
     def update(self):
         super().update()
@@ -28,6 +29,9 @@ class EnemySprite(arcade.Sprite):
 
     def getMaxHealth(self):
         return 3
+    
+    def getDamage(self):
+        return self.damage
 
     def onHit(self):
         self.hitPoints -= 1

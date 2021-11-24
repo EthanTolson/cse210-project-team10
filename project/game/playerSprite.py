@@ -40,7 +40,7 @@ class PlayerSprite(arcade.Sprite):
         if self.enemySprites != None:
             self.collision = self.collides_with_list(self.enemySprites)
             if len(self.collision) != 0 and (self.starttime + 2.5 <= time.time() or self.hitCount < 1):
-                self.onHit()
+                self.onHit(self.collision[0].getDamage())
                 self.starttime = time.time()
                 self.hitCount += 1
         
@@ -54,5 +54,5 @@ class PlayerSprite(arcade.Sprite):
     def getMaxHealth(self):
         return 30
 
-    def onHit(self):
-        self.player_hp -= 3
+    def onHit(self, damage = 3):
+        self.player_hp -= damage

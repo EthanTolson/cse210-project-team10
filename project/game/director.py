@@ -33,20 +33,22 @@ class Director(arcade.View):
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
+        self.pauseBool = False
 
     def on_update(self, delta_time: float):
         """
         Updates the sprites positions also spawns enemies if there are none
         """ 
-        self.physicsEngine.update()
-        self.allSprites.update()
-        self.scroll_to_player()
-        if len(self.enemySprites) == 0 and self.level < 13:
-            self.level += 1
-            self.spawnEnemies()
-            self.player.setEnemySprites(self.enemySprites)
-            if self.level > 11:
-                arcade.close_window()
+        if not self.pauseBool:
+            self.physicsEngine.update()
+            self.allSprites.update()
+            self.scroll_to_player()
+            if len(self.enemySprites) == 0 and self.level < 13:
+                self.level += 1
+                self.spawnEnemies()
+                self.player.setEnemySprites(self.enemySprites)
+                if self.level > 11:
+                    arcade.close_window()
         
 
 
@@ -59,18 +61,22 @@ class Director(arcade.View):
         for enemySprite in self.enemySprites:            
             self.drawHealthBars(enemySprite)
         self.drawHealthBars(self.playerSprite[0])
-        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)}",
+        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)
         arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.GRAPE, 10)
-        if self.help_bool == True:
-            arcade.draw_text(f"right click to move, left click to shoot, normal zombies are average speed and normal health, sprinter zombies are fast and have less health, heavy zombies have more health but are slower",
-            self.player.center_x,
-            self.player.center_y,
-            arcade.color.WHITE, 14)
         self.camera_sprites.use()
         self.allSprites.draw()
+        if self.help_bool or self.pauseBool:
+            arcade.draw_lrtb_rectangle_filled(left = self.player.center_x - self.window.width/4 -10,
+            right = self.player.center_x + self.window.width/4 + 10, top = self.player.center_y + 200,
+            bottom = self.player.center_y - 200, color = arcade.color.ASH_GREY)
+
+            arcade.draw_text(f"Right Click: Move\nLeft Click: Shoot\nP: Pause/Unpause Game\nZombie: Average Speed and Normal Health\nSprinter: Fast and Less Health\nHeavy: More Health and Slower",
+            self.player.center_x,
+            self.player.center_y,
+            arcade.color.WHITE, 14, multiline=True, width= self.window.width /2, anchor_y="center")
         
         
     def drawHealthBars(self, sprite):
@@ -106,6 +112,8 @@ class Director(arcade.View):
             arcade.close_window()
         elif symbol == arcade.key.TAB:
             self.help_bool = True
+        elif symbol == arcade.key.P:
+            self.pauseBool = not self.pauseBool
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.TAB:
@@ -200,14 +208,11 @@ class Director(arcade.View):
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
+        #Arcade requires tile maps to be .json files which is why there is java script code in here
         mapName = const.RESOURCE_PATH + "background.json"
         layer_options = {
             "walls": {
                 "use_spatial_hash": True,
-            },
-            "obstacles":
-            {
-                "use_spacial_hash": True,
             }
         }
         self.tileMap = arcade.load_tilemap(mapName, 1, layer_options)
