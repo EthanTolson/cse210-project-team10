@@ -5,6 +5,8 @@ from game import constants as const
 from game.playerSprite import PlayerSprite
 from game.enemysprite import EnemySprite
 from game.projectile import ProjectileSprite
+from game.sprinterSprite import SprinterSprite
+from game.heavySprite import HeavySprite
 """
 Director Class:
 Class that hanldes the main game view. Inherits from Arcade View.
@@ -34,6 +36,7 @@ class Director(arcade.View):
         self.lastEventY = 0
         self.help_bool = False
         self.pauseBool = False
+        self.helpscreen = arcade.load_texture(const.RESOURCE_PATH + "helpPNG.png")
 
     def on_update(self, delta_time: float):
         """
@@ -50,8 +53,6 @@ class Director(arcade.View):
                 if self.level > 11:
                     arcade.close_window()
         
-
-
     def on_draw(self):
         """
         Draws sprites to screen, also draws health bars and mouse clicks
@@ -69,15 +70,10 @@ class Director(arcade.View):
         self.camera_sprites.use()
         self.allSprites.draw()
         if self.help_bool or self.pauseBool:
-            arcade.draw_lrtb_rectangle_filled(left = self.player.center_x - self.window.width/4 -10,
-            right = self.player.center_x + self.window.width/4 + 10, top = self.player.center_y + 200,
-            bottom = self.player.center_y - 200, color = arcade.color.ASH_GREY)
+            arcade.draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
+            self.player.center_y - 200, 600 , 600, texture = self.helpscreen)   
 
-            arcade.draw_text(f"Right Click: Move\nLeft Click: Shoot\nP: Pause/Unpause Game\nZombie: Average Speed and Normal Health\nSprinter: Fast and Less Health\nHeavy: More Health and Slower",
-            self.player.center_x,
-            self.player.center_y,
-            arcade.color.WHITE, 14, multiline=True, width= self.window.width /2, anchor_y="center")
-        
+        arcade.draw_lrtb_rectangle_outline(-500, 3500, 3500, -500, arcade.color.BLACK, 1000)      
         
     def drawHealthBars(self, sprite):
         """
@@ -163,22 +159,48 @@ class Director(arcade.View):
         """
         Used to spawn enemies based on the level the player is on
         """
-        if self.level <= 10:
-            for i in range(0, 5 * self.level):
-                if i % 2:
-                    self.enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
-                    self.enemy.center_x = random.randint(0, 3000)
-                    self.enemy.center_y = random.randrange(0, 3001, 3000)
-                    self.enemy.setPlayer(self.player)
-                    self.enemySprites.append(self.enemy)
-                    self.allSprites.append(self.enemy)
-                else:
-                    self.enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
-                    self.enemy.center_x = random.randrange(0, 3001, 3000)
-                    self.enemy.center_y = random.randint(0, 3000)
-                    self.enemy.setPlayer(self.player)
-                    self.enemySprites.append(self.enemy)
-                    self.allSprites.append(self.enemy)
+        if self.level <= 1000:
+            if self.level % 30 == 0 or self.level % 50 == 0 and self.level > 0:
+                pass
+            elif self.level > 5:
+                for i in range(0, 3 * self.level):
+                    if i + 5 >= 3 * self.level:
+                        enemy = SprinterSprite(const.RESOURCE_PATH + "sprinterPNG.png", const.SCALING) 
+                        enemy.center_x = random.randint(0, 3000)
+                        enemy.center_y = random.randrange(0, 3001, 3000)
+                        enemy.setPlayer(self.player)
+                        self.enemySprites.append(enemy)
+                        self.allSprites.append(enemy)
+                    elif i % 2:
+                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
+                        enemy.center_x = random.randint(0, 3000)
+                        enemy.center_y = random.randrange(0, 3001, 3000)
+                        enemy.setPlayer(self.player)
+                        self.enemySprites.append(enemy)
+                        self.allSprites.append(enemy)
+                    else:
+                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
+                        enemy.center_x = random.randrange(0, 3001, 3000)
+                        enemy.center_y = random.randint(0, 3000)
+                        enemy.setPlayer(self.player)
+                        self.enemySprites.append(enemy)
+                        self.allSprites.append(enemy)
+            else:
+                for i in range(0, 3 * self.level):
+                    if i % 2:
+                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
+                        enemy.center_x = random.randint(0, 3000)
+                        enemy.center_y = random.randrange(0, 3001, 3000)
+                        enemy.setPlayer(self.player)
+                        self.enemySprites.append(enemy)
+                        self.allSprites.append(enemy)
+                    else:
+                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
+                        enemy.center_x = random.randrange(0, 3001, 3000)
+                        enemy.center_y = random.randint(0, 3000)
+                        enemy.setPlayer(self.player)
+                        self.enemySprites.append(enemy)
+                        self.allSprites.append(enemy)
 
     def spawnProjectiles(self, x, y):
         """
@@ -208,14 +230,12 @@ class Director(arcade.View):
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
-        #Arcade requires tile maps to be .json files which is why there is java script code in here
-        mapName = const.RESOURCE_PATH + "background.json"
         layer_options = {
             "walls": {
                 "use_spatial_hash": True,
             }
         }
-        self.tileMap = arcade.load_tilemap(mapName, 1, layer_options)
+        self.tileMap = arcade.load_tilemap(const.RESOURCE_PATH + "background.json", 1, layer_options)
         
         self.scene = arcade.Scene.from_tilemap(self.tileMap)
         self.physicsEngine = arcade.PhysicsEngineSimple(self.player, self.scene["walls"])

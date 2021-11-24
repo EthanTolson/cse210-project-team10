@@ -2,7 +2,6 @@ import arcade
 import math
 import time
 
-from arcade.color import HELIOTROPE
 """
 SprinterSprite Class:
 Subclass of Arcade Sprite. Used for Sprinter Enemies.
@@ -18,15 +17,21 @@ class SprinterSprite(arcade.Sprite):
         self.hitPoints = 2
         self.player = None
         self.damage = 4
+        self.starttime = time.time()
         
     def update(self):
         super().update()
-        self.change_x = 8 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-        self.change_y = 8 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        if (not self.onCollision()):
+            self.change_x = 6 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+            self.change_y = 6 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        else:
+            self.change_x = 0
+            self.change_y = 0
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if self.hitPoints <= 0:
             self.remove_from_sprite_lists()
-        self.onCollision(self.player)
+        
+
 
     def getHealth(self):
         return self.hitPoints
@@ -43,10 +48,11 @@ class SprinterSprite(arcade.Sprite):
     def setPlayer(self, player):
         self.player = player
 
-    def onCollision(self, player):
-        self.player = player
-        if(self.collides_with_sprite(self.player)):
-            if len(self.collision) != 0 and (self.starttime + 2.5 <= time.time() or self.hitCount < 1):
-                self.onHit()
+    def onCollision(self):
+        if self.starttime + 1 < time.time():
+            if(self.collides_with_sprite(self.player)):
                 self.starttime = time.time()
-                self.hitCount += 1
+                return True
+            return False
+        else:
+            return True
