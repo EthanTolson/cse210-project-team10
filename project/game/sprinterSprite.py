@@ -18,6 +18,7 @@ class SprinterSprite(arcade.Sprite):
         self.player = None
         self.damage = 4
         self.starttime = time.time()
+        self.lastHit = 9999999
         
     def update(self):
         super().update()
@@ -47,6 +48,12 @@ class SprinterSprite(arcade.Sprite):
     
     def setPlayer(self, player):
         self.player = player
+
+    def getLastHit(self):
+        return self.lastHit
+
+    def setLastHit(self, hit):
+        self.lastHit = hit
 
     def onCollision(self):
         if self.starttime + 1 < time.time():
