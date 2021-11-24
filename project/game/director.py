@@ -31,7 +31,7 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 0
+        self.level = 10
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -50,7 +50,7 @@ class Director(arcade.View):
                 self.level += 1
                 self.spawnEnemies()
                 self.player.setEnemySprites(self.enemySprites)
-                if self.level > 11:
+                if self.level > 1001:
                     arcade.close_window()
         
     def on_draw(self):
@@ -59,21 +59,27 @@ class Director(arcade.View):
         """
         arcade.start_render()
         self.scene.draw()
+
         for enemySprite in self.enemySprites:            
             self.drawHealthBars(enemySprite)
+
         self.drawHealthBars(self.playerSprite[0])
+
         arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)
+
         arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.GRAPE, 10)
+
         self.camera_sprites.use()
         self.allSprites.draw()
+
         if self.help_bool or self.pauseBool:
             arcade.draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
             self.player.center_y - 200, 600 , 600, texture = self.helpscreen)   
 
-        arcade.draw_lrtb_rectangle_outline(-500, 3500, 3500, -500, arcade.color.BLACK, 1000)      
+        arcade.draw_lrtb_rectangle_outline(-500, 6900, 6900, -500, arcade.color.BLACK, 1000)      
         
     def drawHealthBars(self, sprite):
         """
@@ -82,19 +88,19 @@ class Director(arcade.View):
         health_width = const.HEALTHBAR_WIDTH * (sprite.getHealth() / sprite.getMaxHealth())
         if sprite.getHealth() < sprite.getMaxHealth():
             arcade.draw_rectangle_filled(center_x = sprite.center_x,
-                    center_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y,
+                    center_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y * sprite.scale,
                     width=const.HEALTHBAR_WIDTH,
-                    height=3,
+                    height=const.HEALTHBAR_HEIGHT * 2 / 3,
                     color=arcade.color.RED)
         arcade.draw_rectangle_filled(center_x=sprite.center_x - 0.5 * \
                     (const.HEALTHBAR_WIDTH - health_width),
-                    center_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y,
+                    center_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y * sprite.scale,
                     width=health_width,
                     height=const.HEALTHBAR_HEIGHT,
                     color=arcade.color.GREEN)
         arcade.draw_text(f"{sprite.getHealth()}/{sprite.getMaxHealth()}",
                     start_x=sprite.center_x,
-                    start_y=sprite.center_y + const.HEALTH_NUMBER_OFFSET_Y,
+                    start_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y * sprite.scale,
                     font_size=12,
                     color=arcade.color.WHITE, anchor_x="center")
 
@@ -162,45 +168,61 @@ class Director(arcade.View):
         if self.level <= 1000:
             if self.level % 30 == 0 or self.level % 50 == 0 and self.level > 0:
                 pass
-            elif self.level > 5:
+            elif self.level > 5 and self.level % 3 == 0:
                 for i in range(0, 3 * self.level):
-                    if i + 5 >= 3 * self.level:
-                        enemy = SprinterSprite(const.RESOURCE_PATH + "sprinterPNG.png", const.SCALING) 
-                        enemy.center_x = random.randint(0, 3000)
-                        enemy.center_y = random.randrange(0, 3001, 3000)
-                        enemy.setPlayer(self.player)
-                        self.enemySprites.append(enemy)
-                        self.allSprites.append(enemy)
+                    if i + self.level * 2 / 5 >= 3 * self.level:
+                        self.spawnSprinter()
                     elif i % 2:
-                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
-                        enemy.center_x = random.randint(0, 3000)
-                        enemy.center_y = random.randrange(0, 3001, 3000)
-                        enemy.setPlayer(self.player)
-                        self.enemySprites.append(enemy)
-                        self.allSprites.append(enemy)
-                    else:
-                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
-                        enemy.center_x = random.randrange(0, 3001, 3000)
-                        enemy.center_y = random.randint(0, 3000)
-                        enemy.setPlayer(self.player)
-                        self.enemySprites.append(enemy)
-                        self.allSprites.append(enemy)
+                        if i % 2:
+                            self.spawnZombieTB()
+                        else:
+                            self.spawnZombieLR()
+            elif self.level > 10 and self.level % 5:
+                for i in range(0, int(self.level/5)):
+                    self.spawnHeavy()
+                    for i in range(0, 10):
+                        if i % 2:
+                            self.spawnZombieTB()
+                        else:
+                            self.spawnZombieLR()
             else:
                 for i in range(0, 3 * self.level):
                     if i % 2:
-                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
-                        enemy.center_x = random.randint(0, 3000)
-                        enemy.center_y = random.randrange(0, 3001, 3000)
-                        enemy.setPlayer(self.player)
-                        self.enemySprites.append(enemy)
-                        self.allSprites.append(enemy)
+                        self.spawnZombieTB()
                     else:
-                        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
-                        enemy.center_x = random.randrange(0, 3001, 3000)
-                        enemy.center_y = random.randint(0, 3000)
-                        enemy.setPlayer(self.player)
-                        self.enemySprites.append(enemy)
-                        self.allSprites.append(enemy)
+                        self.spawnZombieLR()
+
+    def spawnHeavy(self):
+        enemy = HeavySprite(const.RESOURCE_PATH + "heavyPNG.png", const.SCALING + 1.0) 
+        enemy.center_x = random.randint(0, 6200)
+        enemy.center_y = 6220
+        enemy.setPlayer(self.player)
+        self.enemySprites.append(enemy)
+        self.allSprites.append(enemy)
+
+    def spawnZombieTB(self):
+        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
+        enemy.center_x = random.randint(0, 6200)
+        enemy.center_y = random.randrange(-20, 6220, 6239)
+        enemy.setPlayer(self.player)
+        self.enemySprites.append(enemy)
+        self.allSprites.append(enemy)
+
+    def spawnZombieLR(self):
+        enemy = EnemySprite(const.RESOURCE_PATH + "zombiePNG.png", const.SCALING) 
+        enemy.center_x = random.randrange(-20, 6220, 6239)
+        enemy.center_y = random.randint(0, 6200)
+        enemy.setPlayer(self.player)
+        self.enemySprites.append(enemy)
+        self.allSprites.append(enemy)
+
+    def spawnSprinter(self):
+        enemy = SprinterSprite(const.RESOURCE_PATH + "sprinterPNG.png", const.SCALING) 
+        enemy.center_x = random.randint(0, 6200)
+        enemy.center_y = random.randrange(-20, 6220, 6239)
+        enemy.setPlayer(self.player)
+        self.enemySprites.append(enemy)
+        self.allSprites.append(enemy)
 
     def spawnProjectiles(self, x, y):
         """
@@ -225,8 +247,8 @@ class Director(arcade.View):
         creates the player object
         """
         self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG.png", const.SCALING) 
-        self.player.center_x = 1500
-        self.player.center_y = 1500
+        self.player.center_x = 3000
+        self.player.center_y = 3000
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
@@ -235,7 +257,7 @@ class Director(arcade.View):
                 "use_spatial_hash": True,
             }
         }
-        self.tileMap = arcade.load_tilemap(const.RESOURCE_PATH + "background.json", 1, layer_options)
+        self.tileMap = arcade.load_tilemap(const.RESOURCE_PATH + "background.json", 2, layer_options)
         
         self.scene = arcade.Scene.from_tilemap(self.tileMap)
         self.physicsEngine = arcade.PhysicsEngineSimple(self.player, self.scene["walls"])
