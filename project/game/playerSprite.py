@@ -1,5 +1,6 @@
 import arcade
 import time
+import math
 """
 PlayerSprite Class:
 Subclass of Arcade Sprite. Used for the Player.
@@ -56,3 +57,9 @@ class PlayerSprite(arcade.Sprite):
 
     def onHit(self, damage = 3):
         self.player_hp -= damage
+    
+    def movement(self, x, y):
+        self.change_x = 3.5 * ((x- self.center_x ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
+        self.change_y = 3.5 * ((y- self.center_y ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
+        self.lastEventY = y
+        self.lastEventX = x
