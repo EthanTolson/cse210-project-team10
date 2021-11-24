@@ -73,7 +73,7 @@ class Director(arcade.View):
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)
 
-        arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.GRAPE, 10)
+        arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.GRAPE, 10, bold = True)
 
         self.camera_sprites.use()
         self.allSprites.draw()
@@ -112,10 +112,6 @@ class Director(arcade.View):
         self.player.angle = math.atan2(y - self.player.center_y, x - self.player.center_x) * 180 / math.pi
         
         if button == arcade.MOUSE_BUTTON_RIGHT:
-            #You will see a similar line of code in many other places
-            #in order to keep the velocity consistent despite player moevment direction we take the 
-            # distance between the values of the click and divide by the distance to that point on the screen
-            # this ensures that your character moves the same distance over the same amount of time no matter the direction they are moving
             self.player.movement(x,y)
             self.lastEventY = y
             self.lastEventX = x

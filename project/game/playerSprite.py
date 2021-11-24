@@ -59,6 +59,10 @@ class PlayerSprite(arcade.Sprite):
         self.player_hp -= damage
     
     def movement(self, x, y):
+        #You will see a similar line of code in many other places
+        #in order to keep the velocity consistent despite player moevment direction we take the 
+        # distance between the values of the click and divide by the distance to that point on the screen
+        # this ensures that your character moves the same distance over the same amount of time no matter the direction they are moving
         self.change_x = 3.5 * ((x- self.center_x ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
         self.change_y = 3.5 * ((y- self.center_y ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
         self.lastEventY = y
