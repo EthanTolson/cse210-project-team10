@@ -31,7 +31,7 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 0
+        self.level = 994
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -68,21 +68,21 @@ class Director(arcade.View):
 
         DrawHealthBars.drawHealthBars(self.playerSprite[0])
 
-        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | TAB: Show Controls/Help",
-         self.player.center_x - self.window.width/2 + 10, 
-         self.player.center_y - self.window.height/2 + 20, 
-         arcade.color.WHITE, 14)
-
         arcade.draw_text("x", self.lastEventX, self.lastEventY, arcade.color.GRAPE, 10, bold = True)
 
         self.camera_sprites.use()
         self.allSprites.draw()
 
+        arcade.draw_lrtb_rectangle_outline(-500, 6900, 6900, -500, arcade.color.BLACK, 1000)  
+
         if self.help_bool or self.pauseBool:
             arcade.draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
-            self.player.center_y - 200, 600 , 600, texture = self.helpscreen)   
+            self.player.center_y - 200, 600 , 600, texture = self.helpscreen)
 
-        arcade.draw_lrtb_rectangle_outline(-500, 6900, 6900, -500, arcade.color.BLACK, 1000)      
+        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | TAB: Show Controls/Help",
+         self.player.center_x - self.window.width/2 + 10, 
+         self.player.center_y - self.window.height/2 + 20, 
+         arcade.color.WHITE, 14)   
 
     def on_key_press(self, symbol: int, modifiers: int):
         """
@@ -109,16 +109,17 @@ class Director(arcade.View):
         """
         x = x + self.player.center_x - self.window.width/2
         y = y + self.player.center_y - self.window.height/2
-        self.player.angle = math.atan2(y - self.player.center_y, x - self.player.center_x) * 180 / math.pi
         
-        if button == arcade.MOUSE_BUTTON_RIGHT:
-            self.player.movement(x,y)
-            self.lastEventY = y
-            self.lastEventX = x
+        if not self.pauseBool:
+            self.player.angle = math.atan2(y - self.player.center_y, x - self.player.center_x) * 180 / math.pi
+            if button == arcade.MOUSE_BUTTON_RIGHT:
+                self.player.movement(x,y)
+                self.lastEventY = y
+                self.lastEventX = x
 
-        #Spawns the projectiles
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            SpawnProjectiles.spawnProjectiles(self, x, y)
+            #Spawns the projectiles
+            if button == arcade.MOUSE_BUTTON_LEFT:
+                SpawnProjectiles.spawnProjectiles(self, x, y)
 
     def scroll_to_player(self):
         """
