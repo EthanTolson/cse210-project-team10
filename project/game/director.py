@@ -31,11 +31,12 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 0
+        self.level = 998
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
         self.pauseBool = False
+        self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.ogg")
         self.helpscreen = arcade.load_texture(const.RESOURCE_PATH + "helpPNG.png")
 
     def on_update(self, delta_time: float):
@@ -120,6 +121,8 @@ class Director(arcade.View):
             #Spawns the projectiles
             if button == arcade.MOUSE_BUTTON_LEFT:
                 SpawnProjectiles.spawnProjectiles(self, x, y)
+                arcade.play_sound(self.gunSound)
+                
 
     def scroll_to_player(self):
         """

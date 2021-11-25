@@ -1,6 +1,7 @@
 import arcade
 import time
 import math
+from game import constants as const
 """
 PlayerSprite Class:
 Subclass of Arcade Sprite. Used for the Player.
@@ -25,11 +26,14 @@ class PlayerSprite(arcade.Sprite):
         self.lastEventX = None
         self.lastEventY = None
         self.hitCount = 0
+        self._moveSound = arcade.Sound(const.RESOURCE_PATH + "footstep1.ogg")
+        self._moveSound1 = None
         self.starttime = time.time()
 
     def update(self):
         super().update()
-
+        if self.change_x == 0 and self.change_y == 0 and self._moveSound1 != None:
+            self._moveSound.stop(self._moveSound1)
         if self.player_hp <= 0:
             arcade.close_window()
         for i in range(0, 6):
@@ -63,7 +67,12 @@ class PlayerSprite(arcade.Sprite):
         #in order to keep the velocity consistent despite player moevment direction we take the 
         # distance between the values of the click and divide by the distance to that point on the screen
         # this ensures that your character moves the same distance over the same amount of time no matter the direction they are moving
+        if self.lastEventY != y and self.lastEventX != x:
+            if self._moveSound1 != None:
+                self._moveSound.stop(self._moveSound1)
+            self._moveSound1 = arcade.play_sound(self._moveSound, volume = .2, looping = True)
         self.change_x = 3.5 * ((x- self.center_x ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
         self.change_y = 3.5 * ((y- self.center_y ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
         self.lastEventY = y
         self.lastEventX = x
+        
