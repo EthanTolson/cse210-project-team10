@@ -31,7 +31,7 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 994
+        self.level = 995
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -141,8 +141,8 @@ class Director(arcade.View):
         creates the player object
         """
         self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG.png", const.SCALING) 
-        self.player.center_x = 3000
-        self.player.center_y = 3000
+        self.player.center_x = 3200
+        self.player.center_y = 3200
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
