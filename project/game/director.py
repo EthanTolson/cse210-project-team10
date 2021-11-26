@@ -7,6 +7,7 @@ from game.enemysprite import EnemySprite
 from game.projectile import ProjectileSprite
 from game.sprinterSprite import SprinterSprite
 from game.heavySprite import HeavySprite
+from game.bossSprite import BossSprite
 """
 Director Class:
 Class that hanldes the main game view. Inherits from Arcade View.
@@ -201,6 +202,14 @@ class Director(arcade.View):
 
     def spawnHeavy(self):
         enemy = HeavySprite(const.RESOURCE_PATH + "heavyPNG.png", const.SCALING + 1.0) 
+        enemy.center_x = random.randint(0, 6200)
+        enemy.center_y = 6220
+        enemy.setPlayer(self.player)
+        self.enemySprites.append(enemy)
+        self.allSprites.append(enemy)
+    
+    def spawnBoss(self):
+        enemy = BossSprite(const.RESOURCE_PATH + "bossPNG.png", const.SCALING + 2.0) 
         enemy.center_x = random.randint(0, 6200)
         enemy.center_y = 6220
         enemy.setPlayer(self.player)
