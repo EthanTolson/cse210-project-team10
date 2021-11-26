@@ -6,6 +6,7 @@ from game import constants as const
 from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
 from game.spawnEnemies import SpawnEnemies
+from game.qAbility import QAbility
 from game.spawnProjectiles import SpawnProjectiles
 """
 Director Class:
@@ -38,6 +39,7 @@ class Director(arcade.View):
         self.pauseBool = False
         self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.ogg")
         self.helpscreen = arcade.load_texture(const.RESOURCE_PATH + "helpPNG.png")
+        
 
     def on_update(self, delta_time: float):
         """
@@ -80,7 +82,7 @@ class Director(arcade.View):
             arcade.draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
             self.player.center_y - 200, 600 , 600, texture = self.helpscreen)
 
-        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | TAB: Show Controls/Help",
+        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left: {self.q.getShotsLeft()} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)   
@@ -97,11 +99,12 @@ class Director(arcade.View):
             self.help_bool = True
         elif symbol == arcade.key.P:
             self.pauseBool = not self.pauseBool
+        elif symbol == arcade.key.Q:
+            self.q.switchStance(self.player)
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.TAB:
             self.help_bool = not self.help_bool
-
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         """
@@ -120,10 +123,9 @@ class Director(arcade.View):
 
             #Spawns the projectiles
             if button == arcade.MOUSE_BUTTON_LEFT:
-                SpawnProjectiles.spawnProjectiles(self, x, y)
-                arcade.play_sound(self.gunSound)
+                if self.q.shoot(self, x, y, self.player.center_y, self.player.center_x):
+                    arcade.play_sound(self.gunSound, volume= .2)
                 
-
     def scroll_to_player(self):
         """
         Moves the camera center to the player to ensure player does not move off screen
@@ -143,12 +145,13 @@ class Director(arcade.View):
         Setup for before first update cycle
         creates the player object
         """
-        self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG.png", const.SCALING) 
+        self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG1.png", const.SCALING) 
         self.player.center_x = 3200
         self.player.center_y = 3200
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
+        self.q = QAbility()
         layer_options = {
             "walls": {
                 "use_spatial_hash": True,

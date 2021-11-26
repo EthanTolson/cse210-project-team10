@@ -70,7 +70,7 @@ class PlayerSprite(arcade.Sprite):
         if self.lastEventY != y and self.lastEventX != x:
             if self._moveSound1 != None:
                 self._moveSound.stop(self._moveSound1)
-            self._moveSound1 = arcade.play_sound(self._moveSound, volume = .2, looping = True)
+            self._moveSound1 = arcade.play_sound(self._moveSound, volume = .05, looping = True)
         self.change_x = 3.5 * ((x- self.center_x ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
         self.change_y = 3.5 * ((y- self.center_y ) / math.sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
         self.lastEventY = y
