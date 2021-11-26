@@ -81,7 +81,7 @@ class Director(arcade.View):
             arcade.draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
             self.player.center_y - 200, 600 , 600, texture = self.helpscreen)
 
-        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left: {self.q.getShotsLeft()} | TAB: Show Controls/Help",
+        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left(Q to Switch Weapons): {self.q.getShotsLeft()} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)   
