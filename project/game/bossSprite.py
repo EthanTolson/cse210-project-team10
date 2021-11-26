@@ -15,6 +15,7 @@ class BossSprite(arcade.Sprite):
         self.hitPoints = 16
         self.player = None
         self.damage = 10
+        self.lastHit = 99999999
         
     def update(self):
         super().update()
@@ -38,3 +39,9 @@ class BossSprite(arcade.Sprite):
     
     def setPlayer(self, player):
         self.player = player
+    
+    def getLastHit(self):
+        return self.lastHit
+
+    def setLastHit(self, hit):
+        self.lastHit = hit
