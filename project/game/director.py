@@ -7,7 +7,6 @@ from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
 from game.spawnEnemies import SpawnEnemies
 from game.qAbility import QAbility
-from game.spawnProjectiles import SpawnProjectiles
 """
 Director Class:
 Class that hanldes the main game view. Inherits from Arcade View.
