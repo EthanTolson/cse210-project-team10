@@ -1,4 +1,4 @@
-mport arcade
+import arcade
 import math
 """
 BossSprite Class:

@@ -2,6 +2,7 @@ import random
 from game.enemysprite import EnemySprite
 from game.sprinterSprite import SprinterSprite
 from game.heavySprite import HeavySprite
+from game.bossSprite import BossSprite
 from game import constants as const
 
 class SpawnEnemies():
@@ -9,7 +10,7 @@ class SpawnEnemies():
     def spawnEnemies(director):
         if director.level <= 1000:
             if director.level % 30 == 0 or director.level % 50 == 0 and director.level > 0:
-                pass
+                SpawnEnemies.spawnBoss(director)
             elif director.level > 5 and director.level % 3 == 0:
                 for i in range(0, int(director.level / 3)):
                     if len(director.enemySprites) <= 250:
@@ -43,6 +44,14 @@ class SpawnEnemies():
                             SpawnEnemies.spawnZombieTB(director)
                         else:
                             SpawnEnemies.spawnZombieLR(director)
+
+    def spawnBoss(director):
+        enemy = BossSprite(const.RESOURCE_PATH + "bossPNG.png", const.SCALING + 2.0) 
+        enemy.center_x = random.randint(0, 6200)
+        enemy.center_y = 6220
+        enemy.setPlayer(director.player)
+        director.enemySprites.append(enemy)
+        director.allSprites.append(enemy)
 
     def spawnHeavy(director):
         enemy = HeavySprite(const.RESOURCE_PATH + "heavyPNG.png", const.SCALING + 1.0) 
