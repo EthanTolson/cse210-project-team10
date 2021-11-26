@@ -1,5 +1,6 @@
 import arcade
 import math
+import time
 """
 Projectile Class:
 Subclass of Arcade Sprite. Used for Projectiles.
@@ -27,6 +28,7 @@ class ProjectileSprite(arcade.Sprite):
 
         if len(collisionList) != 0:
             collisionList[0].onHit()
+            collisionList[0].setLastHit(time.time())
             self.onHit()
 
     def onHit(self):
