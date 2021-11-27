@@ -12,15 +12,15 @@ Attributes:
 class BossSprite(arcade.Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
-        self.hitPoints = 16
+        self.hitPoints = 30
         self.player = None
         self.damage = 10
         self.lastHit = 99999999
         
     def update(self):
         super().update()
-        self.change_x = 3 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-        self.change_y = 3 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        self.change_x = 6.5 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        self.change_y = 6.5 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if self.hitPoints <= 0:
             self.remove_from_sprite_lists()
@@ -29,7 +29,7 @@ class BossSprite(arcade.Sprite):
         return self.hitPoints
 
     def getMaxHealth(self):
-        return 16
+        return 30
     
     def getDamage(self):
         return self.damage
