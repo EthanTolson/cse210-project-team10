@@ -1,6 +1,5 @@
 import arcade
 import math
-import random
 import time
 from game import constants as const
 from game.playerSprite import PlayerSprite
@@ -114,16 +113,32 @@ class Director(arcade.View):
         y = y + self.player.center_y - self.window.height/2
         
         if not self.pauseBool:
-            self.player.angle = math.atan2(y - self.player.center_y, x - self.player.center_x) * 180 / math.pi
+            
             if button == arcade.MOUSE_BUTTON_RIGHT:
+                
+                #These if statements prevent wall kiting
+                if x < 170:
+                    x = 170
+                elif x > 6040:
+                    x = 6040
+
+                if y < 170:
+                    y = 170
+                elif y > 6230:
+                    y = 6230
+
                 self.player.movement(x,y)
                 self.lastEventY = y
                 self.lastEventX = x
 
+            self.player.angle = math.atan2(y - self.player.center_y, x - self.player.center_x) * 180 / math.pi
+            
             #Spawns the projectiles
             if button == arcade.MOUSE_BUTTON_LEFT:
                 if self.q.shoot(self, x, y, self.player.center_y, self.player.center_x):
                     arcade.play_sound(self.gunSound, volume= .2)
+            
+            
                 
     def scroll_to_player(self):
         """
