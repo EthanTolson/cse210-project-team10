@@ -1,6 +1,7 @@
 import arcade
 import time
 import math
+from game.endScreen import EndScreen
 from game import constants as const
 """
 PlayerSprite Class:
@@ -35,7 +36,8 @@ class PlayerSprite(arcade.Sprite):
         if self.change_x == 0 and self.change_y == 0 and self._moveSound1 != None:
             self._moveSound.stop(self._moveSound1)
         if self.player_hp <= 0:
-            arcade.close_window()
+            gameView = EndScreen()
+            self.show_view(gameView)
         for i in range(0, 6):
             if self.lastEventX != None and (self.lastEventX <= self.center_x + i and self.lastEventX \
                 >= self.center_x - i) and(self.lastEventY <= self.center_y + i and self.lastEventY \
