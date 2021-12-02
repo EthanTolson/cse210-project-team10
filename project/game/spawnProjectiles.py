@@ -11,7 +11,7 @@ class SpawnProjectiles():
             """
             projectile = ProjectileSprite(const.RESOURCE_PATH + "projectilePNG.png", 1/8 * const.SCALING)
             projectile.setPositionUsed(director.player.center_x, director.player.center_y)
-            projectile.setEnemySprites(director.enemySprites)
+            projectile.setSpriteList(director.enemySprites)
             
             projectile.center_x = director.player.center_x + math.sin(math.pi/180 * (director.player.angle + 45.8550973963)) * 33.54 # Calculates the offset for the bullet to shoot out of the gun
             projectile.center_y = director.player.center_y - math.cos(math.pi/180 * (director.player.angle + 45.8550973963)) * 33.54 # Calculates the offset for the bullet to shoot out of the gun
