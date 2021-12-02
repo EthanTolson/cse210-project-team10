@@ -115,7 +115,6 @@ class Director(arcade.View):
         if not self.pauseBool:
             
             if button == arcade.MOUSE_BUTTON_RIGHT:
-                
                 #These if statements prevent wall kiting
                 if x < 170:
                     x = 170
@@ -126,7 +125,7 @@ class Director(arcade.View):
                     y = 170
                 elif y > 6230:
                     y = 6230
-
+                    
                 self.player.movement(x,y)
                 self.lastEventY = y
                 self.lastEventX = x
