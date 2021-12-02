@@ -1,5 +1,6 @@
 import arcade
 import math
+from spawnEnemyProjectiles import SpawnProjectiles
 
 """
 BossShooterSprite Class:
@@ -25,6 +26,8 @@ class BossShooterSprite(arcade.Sprite):
         self.change_x = 6 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         self.change_y = 6 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
+        if math.sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) > 500:
+            SpawnProjectiles.spawnProjectiles(self.director, self.center_x, self.center_y, self)
         if self.hitPoints <= 0:
             self.director.points += self.points
             self.remove_from_sprite_lists()
