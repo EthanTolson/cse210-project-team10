@@ -44,6 +44,7 @@ class Director(arcade.View):
         """
         Updates the sprites positions also spawns enemies if there are none
         """ 
+        self.player.stopFootSteps()
         if not self.pauseBool:
             self.physicsEngine.update()
             self.allSprites.update()
@@ -94,6 +95,7 @@ class Director(arcade.View):
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
             self.pauseBool = True
+            self.player.stopFootSteps()
             gameView = EndScreen()
             gameView.setDirector(self)
             self.window.show_view(gameView)
