@@ -1,33 +1,44 @@
 import arcade
+#from game.director import Director
+from arcade.color import RED_DEVIL
 from game import constants as const
 
 class EndScreen(arcade.View):
+
+
+
     def __init__(self):
         super().__init__()
-    
-    def on_draw(self):
+        self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         
-        # if not self.running:
-        #     return
-        #self.screen.fill(255, 0, 0)
+        
+    def on_draw(self):
+        """
+        Draws sprites to screen, also draws health bars and mouse clicks
+        """
         arcade.start_render()
-        # arcade.draw_text("GAME OVER", 48, 100, arcade.color.WHITE, const.SCREEN_WIDTH / 2, const.SCREEN_HEIGHT/ 4)
-        # arcade.draw_text(f"Score: {str(100)}", 22, 200, arcade.color.WHITE, const.SCREEN_WIDTH / 2, const.SCREEN_HEIGHT/ 2)
-        arcade.draw_text("Press a key to play again", 22, 300, arcade.color.WHITE, const.SCREEN_WIDTH / 2)#, const.SCREEN_HEIGHT * 3/4)
-        # arcade.display.flip()
-        # # self.wait_for_key()
+        arcade.draw_lrtb_rectangle_outline(200,(self.window.width - 200),(self.window.height - 200),200, color = RED_DEVIL)
+        arcade.draw_text("GAME OVER", self.window.width*.25, self.window.height*.6, font_size = 100)   
+        arcade.draw_text("press enter to begin.", self.window.width*.2, self.window.height*.3, font_size = 75)
+        arcade.draw_lrwh_rectangle_textured(200,(self.window.width - 200),(self.window.height - 200),200, texture = self.helpscreen)
 
     def on_key_press(self, symbol: int, modifiers: int):
-        if symbol == arcade.key.ESCAPE:
+        """
+        Checks for key presses and does corresponding action
+        """
+        if symbol == arcade.key.F:
+            self.window.set_fullscreen(not self.window.fullscreen)
+        elif symbol == arcade.key.ESCAPE:
             arcade.close_window()
+        elif symbol == arcade.key.ENTER: 
+            gameView = Director()
+            gameView.setup()
+            self.window.show_view(gameView)
+
+    def on_resize(self, width: int, height: int):
+        """
+        Ensures camera works if user resizes screen
+        """
+        self.camera_sprites.resize(int(width), int(height))
+
     
-    # def wait_for_key(self):
-    #     waiting = True
-    #     while waiting:
-    #         self.clock.tick(60)
-    #         for event in arcade.event.get():
-    #             if event.type == arcade.QUIT:
-    #                 waiting = False
-    #                 self.running = False
-    #             if event.type == arcade.KEYUP:
-    #                 waiting = False
