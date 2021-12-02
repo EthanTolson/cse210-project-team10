@@ -93,7 +93,9 @@ class Director(arcade.View):
         if symbol == arcade.key.F:
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
+            self.pauseBool = True
             gameView = EndScreen()
+            gameView.setDirector(self)
             self.window.show_view(gameView)
         elif symbol == arcade.key.TAB:
             self.help_bool = True
@@ -154,6 +156,19 @@ class Director(arcade.View):
         Ensures camera works if user resizes screen
         """
         self.camera_sprites.resize(int(width), int(height))
+
+    def reset(self):
+        self.playerSprite = arcade.SpriteList()
+        self.enemySprites = arcade.SpriteList()
+        self.projectileSprites = arcade.SpriteList()
+        self.allSprites = arcade.SpriteList()
+        self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
+        self.level = 0
+        self.lastEventX = 0
+        self.lastEventY = 0
+        self.help_bool = False
+        self.pauseBool = False
+        self.setup()
        
     def setup(self):
         """
@@ -163,6 +178,7 @@ class Director(arcade.View):
         self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG1.png", const.SCALING) 
         self.player.center_x = 3200
         self.player.center_y = 3200
+        self.player.setDirector(self)
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)

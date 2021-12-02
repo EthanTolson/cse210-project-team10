@@ -30,6 +30,7 @@ class PlayerSprite(arcade.Sprite):
         self._moveSound = arcade.Sound(const.RESOURCE_PATH + "footstep1.ogg")
         self._moveSound1 = None
         self.starttime = time.time()
+        self.director = None
 
     def update(self):
         super().update()
@@ -37,7 +38,8 @@ class PlayerSprite(arcade.Sprite):
             self._moveSound.stop(self._moveSound1)
         if self.player_hp <= 0:
             gameView = EndScreen()
-            self.show_view(gameView)
+            gameView.setDirector(self.director)
+            self.director.window.show_view(gameView)
         for i in range(0, 6):
             if self.lastEventX != None and (self.lastEventX <= self.center_x + i and self.lastEventX \
                 >= self.center_x - i) and(self.lastEventY <= self.center_y + i and self.lastEventY \
@@ -63,6 +65,9 @@ class PlayerSprite(arcade.Sprite):
 
     def onHit(self, damage = 3):
         self.player_hp -= damage
+
+    def setDirector(self, director):
+        self.director = director
     
     def movement(self, x, y):
         #You will see a similar line of code in many other places
