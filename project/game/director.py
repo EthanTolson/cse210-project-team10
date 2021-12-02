@@ -6,6 +6,7 @@ from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
 from game.spawnEnemies import SpawnEnemies
 from game.qAbility import QAbility
+from game.endScreen import EndScreen
 """
 Director Class:
 Class that hanldes the main game view. Inherits from Arcade View.
@@ -92,7 +93,8 @@ class Director(arcade.View):
         if symbol == arcade.key.F:
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
-            arcade.close_window()
+            gameView = EndScreen()
+            Director.show_view(gameView)
         elif symbol == arcade.key.TAB:
             self.help_bool = True
         elif symbol == arcade.key.P:
