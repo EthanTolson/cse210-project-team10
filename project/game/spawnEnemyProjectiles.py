@@ -10,7 +10,7 @@ class SpawnProjectiles():
             Spawns projectiles
             creates projectile objects and saves them to sprite lists
             """
-            projectile = ProjectileSprite(const.RESOURCE_PATH + "projectilePNG.png", 1/8 * const.SCALING)
+            projectile = ProjectileSprite(const.RESOURCE_PATH + "enemyProjectilePNG.png", 1/8 * const.SCALING)
             projectile.setPositionUsed(ShooterSprite.center_x, ShooterSprite.center_y)
             projectile.setSpriteList(director.playerSprite)
             
