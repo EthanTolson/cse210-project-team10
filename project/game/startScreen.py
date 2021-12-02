@@ -24,10 +24,14 @@ class StartScreen(arcade.View):
         Draws sprites to screen, also draws health bars and mouse clicks
         """
         arcade.start_render()
-        arcade.draw_lrtb_rectangle_outline(200,(self.window.width - 200),(self.window.height - 200),200, color = BLACK)
-        arcade.draw_text("Welcome!", self.window.width*.25, self.window.height*.6, font_size = 120)   
-        arcade.draw_text("press enter to begin.", self.window.width*.2, self.window.height*.3, font_size = 75)
-        arcade.draw_lrwh_rectangle_textured(200,(self.window.width - 200),(self.window.height - 200),200, texture = self.helpscreen)
+        self.tileMap = arcade.load_tilemap(const.RESOURCE_PATH + "background.json", 2)
+        self.scene = arcade.Scene.from_tilemap(self.tileMap)
+        self.scene.draw()
+        arcade.draw_lrtb_rectangle_outline(100,self.window.width-50,(self.window.height - 50),50, color = BLACK)
+        arcade.draw_lrwh_rectangle_textured(self.window.width*.22, self.window.height*.25,800,400, texture = self.helpscreen)
+        arcade.draw_text("Welcome!", self.window.width*.25, self.window.height*.75, font_size = 120)   
+        arcade.draw_text("press enter to begin.", self.window.width*.2, self.window.height*.15, font_size = 75)
+        
 
     def on_key_press(self, symbol: int, modifiers: int):
         """
