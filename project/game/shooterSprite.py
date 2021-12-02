@@ -1,5 +1,6 @@
 import arcade
 import math
+from spawnEnemyProjectiles import SpawnProjectiles
 
 """
 EnemySprite Class:
@@ -25,6 +26,8 @@ class ShooterSprite(arcade.Sprite):
         self.change_x = 5 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         self.change_y = 5 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
+        if math.sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) > 500:
+            SpawnProjectiles.spawnProjectiles()
         if self.hitPoints <= 0:
             self.director.points += self.points
             self.remove_from_sprite_lists()

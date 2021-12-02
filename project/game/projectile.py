@@ -16,7 +16,7 @@ class ProjectileSprite(arcade.Sprite):
         super().__init__(filename, scaling)
         self.positionUsedX = None
         self.positionUsedY = None
-        self.enemySprites = None
+        self.spriteList = None
         
 
     def update(self):
@@ -24,7 +24,7 @@ class ProjectileSprite(arcade.Sprite):
         if math.sqrt((self.positionUsedY - self.center_y)**2 + (self.positionUsedX - self.center_x)**2) > 600:
             self.remove_from_sprite_lists()
 
-        collisionList = self.collides_with_list(self.enemySprites)
+        collisionList = self.collides_with_list(self.spriteList)
 
         if len(collisionList) != 0:
             collisionList[0].onHit()
@@ -41,5 +41,5 @@ class ProjectileSprite(arcade.Sprite):
         self.positionUsedX = x
         self.positionUsedY = y
 
-    def setEnemySprites(self, enemySprites):
-        self.enemySprites = enemySprites
+    def setSpriteList(self, spriteList):
+        self.spriteList = spriteList
