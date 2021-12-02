@@ -1,7 +1,6 @@
 import arcade
 import math
 import time
-import director
 
 """
 SprinterSprite Class:
@@ -20,6 +19,8 @@ class SprinterSprite(arcade.Sprite):
         self.damage = 4
         self.starttime = time.time()
         self.lastHit = 9999999
+        self.director = None
+        self.points = 15
         
     def update(self):
         super().update()
@@ -31,7 +32,7 @@ class SprinterSprite(arcade.Sprite):
             self.change_y = 0
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if self.hitPoints <= 0:
-            director.onEnemyDeath(2)
+            self.director.score += self.points
             self.remove_from_sprite_lists()
         
 
@@ -56,6 +57,9 @@ class SprinterSprite(arcade.Sprite):
 
     def setLastHit(self, hit):
         self.lastHit = hit
+
+    def setDirector(self, director):
+        self.director = director
 
     def onCollision(self):
         if self.starttime + 1 < time.time():

@@ -94,7 +94,7 @@ class Director(arcade.View):
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
             gameView = EndScreen()
-            Director.show_view(gameView)
+            self.window.show_view(gameView)
         elif symbol == arcade.key.TAB:
             self.help_bool = True
         elif symbol == arcade.key.P:
@@ -177,7 +177,7 @@ class Director(arcade.View):
         self.scene = arcade.Scene.from_tilemap(self.tileMap)
         self.physicsEngine = arcade.PhysicsEngineSimple(self.player, self.scene["walls"])
 
-        def onEnemyDeath(enemyType):
+    def onEnemyDeath(self, enemyType):
             """
             Called when an enemy is removed from the sprite list
             adds points to self.score
