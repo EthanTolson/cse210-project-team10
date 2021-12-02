@@ -18,24 +18,14 @@ class EndScreen(arcade.View):
         super().__init__()
     
     def game_over(self):
-        BLACK = (0, 0, 0)
-        RED = (255, 0, 0)
-        GREEN = (0, 255, 0)
-        BLUE = (0, 0, 255)
-        YELLOW = (255, 255, 0)
         WHITE = (255, 255, 255)
-        BLACK = (0, 0, 0)
-        RED = (255, 0, 0)
-        GREEN = (0, 255, 0)
-        BLUE = (0, 0, 255)
-        YELLOW = (255, 255, 0)
-        WIDTH = 480
+        WIDTH = 800
         HEIGHT = 600
 
         if not self.running:
             return
         self.screen.fill(255, 0, 0)
-        self.draw_text("GAME OVER", 48, WHITE, 240, 150)
+        self.draw_text("GAME OVER", 48, WHITE, WIDTH / 2, HEIGHT / 4)
         self.draw_text("Score: " + str(self.score), 22, WHITE, WIDTH / 2, HEIGHT / 2)
         self.draw_text("Press a key to play again", 22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
         arcade.display.flip()
