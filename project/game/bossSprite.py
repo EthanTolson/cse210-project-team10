@@ -1,6 +1,5 @@
 import arcade
 import math
-import director
 
 """
 BossSprite Class:
@@ -18,6 +17,8 @@ class BossSprite(arcade.Sprite):
         self.player = None
         self.damage = 10
         self.lastHit = 99999999
+        self.points = 100
+        self.director = None
         
     def update(self):
         super().update()
@@ -25,7 +26,7 @@ class BossSprite(arcade.Sprite):
         self.change_y = 6.5 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if self.hitPoints <= 0:
-            director.onEnemyDeath(5)
+            self.director.points += self.points
             self.remove_from_sprite_lists()
 
     def getHealth(self):
@@ -48,3 +49,6 @@ class BossSprite(arcade.Sprite):
 
     def setLastHit(self, hit):
         self.lastHit = hit
+
+    def setDirector(self, director):
+        self.director = director

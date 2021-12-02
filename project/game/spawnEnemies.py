@@ -50,6 +50,7 @@ class SpawnEnemies():
         enemy.center_x = random.randint(0, 6200)
         enemy.center_y = 6220
         enemy.setPlayer(director.player)
+        enemy.setDirector(director)
         director.enemySprites.append(enemy)
         director.allSprites.append(enemy)
 
@@ -58,6 +59,7 @@ class SpawnEnemies():
         enemy.center_x = random.randrange(-50, 6450, 6489)
         enemy.center_y = random.randint(0, 6400)
         enemy.setPlayer(director.player)
+        enemy.setDirector(director)
         director.enemySprites.append(enemy)
         director.allSprites.append(enemy)
 
@@ -66,6 +68,7 @@ class SpawnEnemies():
         enemy.center_x = random.randint(0, 6400)
         enemy.center_y = random.randrange(-50, 6450, 6489)
         enemy.setPlayer(director.player)
+        enemy.setDirector(director)
         director.enemySprites.append(enemy)
         director.allSprites.append(enemy)
 
@@ -74,6 +77,7 @@ class SpawnEnemies():
         enemy.center_x = random.randrange(-50, 6450, 6489)
         enemy.center_y = random.randint(0, 6400)
         enemy.setPlayer(director.player)
+        enemy.setDirector(director)
         director.enemySprites.append(enemy)
         director.allSprites.append(enemy)
 
@@ -82,6 +86,7 @@ class SpawnEnemies():
         enemy.center_x = random.randint(0, 6400)
         enemy.center_y = random.randrange(-50, 6450, 6489)
         enemy.setPlayer(director.player)
+        enemy.setDirector(director)
         director.enemySprites.append(enemy)
         director.allSprites.append(enemy)
 
@@ -90,5 +95,6 @@ class SpawnEnemies():
         enemy.center_x = random.randrange(-50, 6450, 6489)
         enemy.center_y = random.randint(0, 6400)
         enemy.setPlayer(director.player)
+        enemy.setDirector(director)
         director.enemySprites.append(enemy)
         director.allSprites.append(enemy)
