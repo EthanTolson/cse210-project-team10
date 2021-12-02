@@ -6,6 +6,7 @@ from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
 from game.spawnEnemies import SpawnEnemies
 from game.qAbility import QAbility
+from game.endScreen import EndScreen
 """
 Director Class:
 Class that hanldes the main game view. Inherits from Arcade View.
@@ -92,7 +93,8 @@ class Director(arcade.View):
         if symbol == arcade.key.F:
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
-            arcade.close_window()
+            gameView = EndScreen()
+            Director.show_view(gameView)
         elif symbol == arcade.key.TAB:
             self.help_bool = True
         elif symbol == arcade.key.P:
@@ -174,3 +176,39 @@ class Director(arcade.View):
         
         self.scene = arcade.Scene.from_tilemap(self.tileMap)
         self.physicsEngine = arcade.PhysicsEngineSimple(self.player, self.scene["walls"])
+
+        def onEnemyDeath(enemyType):
+            """
+            Called when an enemy is removed from the sprite list
+            adds points to self.score
+            number of points added depends on enemy type
+            - (1) Standard: 10
+            - (2) Sprinter: 15
+            - (3) Heavy: 20
+            - (4) Shooter: 30
+            - (5) Boss: 100
+            - (6) Boss shooter: 250
+            """
+
+            standardPoints = 10
+            sprinterPoints = 15
+            heavyPoints = 20
+            shooterPoints = 30
+            bossPoints = 100
+            bossShooterPoints = 250
+            defaultPoints = 0
+
+            if (enemyType == 1):
+                self.score += standardPoints
+            elif (enemyType == 2):
+                self.score += sprinterPoints
+            elif (enemyType == 2):
+                self.score += heavyPoints
+            elif (enemyType == 3):
+                self.score += shooterPoints
+            elif (enemyType == 4):
+                self.score += bossPoints
+            elif (enemyType == 6):
+                self.score += bossShooterPoints
+            else:
+                self.score += defaultPoints

@@ -1,6 +1,8 @@
 import arcade
 import math
 from spawnEnemyProjectiles import SpawnProjectiles
+import director
+
 """
 EnemySprite Class:
 Subclass of Arcade Sprite. Used for Enemies.
@@ -26,6 +28,7 @@ class ShooterSprite(arcade.Sprite):
         if math.sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) > 500:
             SpawnProjectiles.spawnProjectiles()
         if self.hitPoints <= 0:
+            director.onEnemyDeath(4)
             self.remove_from_sprite_lists()
 
     def getHealth(self):

@@ -1,6 +1,7 @@
 import arcade
 import math
 import time
+import director
 
 """
 SprinterSprite Class:
@@ -30,6 +31,7 @@ class SprinterSprite(arcade.Sprite):
             self.change_y = 0
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if self.hitPoints <= 0:
+            director.onEnemyDeath(2)
             self.remove_from_sprite_lists()
         
 
