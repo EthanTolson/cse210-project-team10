@@ -125,7 +125,7 @@ class Director(arcade.View):
                     y = 170
                 elif y > 6230:
                     y = 6230
-                    
+
                 self.player.movement(x,y)
                 self.lastEventY = y
                 self.lastEventX = x
@@ -174,4 +174,3 @@ class Director(arcade.View):
         
         self.scene = arcade.Scene.from_tilemap(self.tileMap)
         self.physicsEngine = arcade.PhysicsEngineSimple(self.player, self.scene["walls"])
-    
