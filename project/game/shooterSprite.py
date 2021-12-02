@@ -1,5 +1,7 @@
 import arcade
 import math
+import director
+
 """
 EnemySprite Class:
 Subclass of Arcade Sprite. Used for Enemies.
@@ -23,6 +25,7 @@ class ShooterSprite(arcade.Sprite):
         self.change_y = 5 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if self.hitPoints <= 0:
+            director.onEnemyDeath(4)
             self.remove_from_sprite_lists()
 
     def getHealth(self):
