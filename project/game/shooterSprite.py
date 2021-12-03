@@ -38,7 +38,8 @@ class ShooterSprite(arcade.Sprite):
             SpawnEnemyProjectiles.spawnProjectiles(self.director, self.center_x, self.center_y, self)
         if self.hitPoints <= 0:
             self.director.score += self.points
-            self.director.playDeath()
+            if len(self.director.enemySprites) != 1:
+                self.director.playDeath()
             self.remove_from_sprite_lists()
 
     def getHealth(self):
