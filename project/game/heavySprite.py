@@ -27,6 +27,7 @@ class HeavySprite(arcade.Sprite):
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if self.hitPoints <= 0:
             self.director.score += self.points
+            self.director.playDeath()
             self.remove_from_sprite_lists()
 
     def getHealth(self):

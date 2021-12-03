@@ -41,6 +41,7 @@ class BossShooterSprite(arcade.Sprite):
             
         if self.hitPoints <= 0:
             self.director.score += self.points
+            self.director.playDeath()
             self.remove_from_sprite_lists()
 
     def getHealth(self):

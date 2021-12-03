@@ -36,6 +36,8 @@ class Director(arcade.View):
         self.lastEventY = 0
         self.help_bool = False
         self.pauseBool = False
+        self.deathsound = arcade.Sound(const.RESOURCE_PATH + "zombiedeathsound.ogg")
+        self.levelup = arcade.Sound(const.RESOURCE_PATH + "levelup.ogg")
         self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.ogg")
         self.helpscreen = arcade.load_texture(const.RESOURCE_PATH + "helpPNG.png")        
 
@@ -49,6 +51,7 @@ class Director(arcade.View):
             self.allSprites.update()
             self.scroll_to_player()
             if len(self.enemySprites) == 0 and self.level < 1003:
+                self.levelup.play(.5)
                 self.level += 1
                 SpawnEnemies.spawnEnemies(self)
                 self.player.setEnemySprites(self.enemySprites)
@@ -163,6 +166,9 @@ class Director(arcade.View):
         Ensures camera works if user resizes screen
         """
         self.camera_sprites.resize(int(width), int(height))
+
+    def playDeath(self):
+        self.deathsound.play(.15)
 
     def reset(self, music):
         self.playerSprite = arcade.SpriteList()
