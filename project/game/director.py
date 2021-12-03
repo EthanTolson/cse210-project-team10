@@ -67,8 +67,7 @@ class Director(arcade.View):
             self.scroll_to_player()
             if len(self.enemySprites) == 0 and self.level < 1003:
                 self.levelup.play(.5)
-                self.doubleDamage[1] = 0
-                self.doubleDamage[0] = False
+                self.doubleDamage = [False, 0]
                 self.ult = [False, 0]
                 self.level += 1
                 SpawnEnemies.spawnEnemies(self)
