@@ -63,7 +63,10 @@ class Controller():
             #Spawns the projectiles
             if button == arcade.MOUSE_BUTTON_LEFT:
                 if director.q.shoot(director, x, y, director.player.center_y, director.player.center_x):
-                    arcade.play_sound(director.gunSound, volume= .2)
+                    if director.q.getStance() == 0:
+                        arcade.play_sound(director.gunSound, volume= .2)
+                    else:
+                        arcade.play_sound(director.shotgunSound, volume= .1)
                 if director.doubleDamage[0] and director.doubleDamage[1] != 1:
                     director.q.shoot(director, x, y, director.player.center_y, director.player.center_x)
                     if director.q.shotsLeft[director.q.stance] != 0:

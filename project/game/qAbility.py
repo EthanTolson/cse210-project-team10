@@ -25,6 +25,7 @@ class QAbility():
 
     def shoot(self, director, x, y, playery = 0, playerx = 0):
         if self.shotsLeft[0] == 0:
+            arcade.play_sound(director.reloadSound , .4)
             self.shotsLeft = [30, 20]
 
         
@@ -41,3 +42,6 @@ class QAbility():
                 return True
         else:
             return False
+
+    def getStance(self):
+        return self.stance
