@@ -25,8 +25,13 @@ class ShooterSprite(arcade.Sprite):
         
     def update(self):
         super().update()
-        self.change_x = 5 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-        self.change_y = 5 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        if self.lastShot + 1 < time.time():
+            self.change_x = 5 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+            self.change_y = 5 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        else:
+            self.change_x = 0
+            self.change_y = 0
+
         self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
         if math.sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) < 500 and self.lastShot + 1 < time.time():
             self.lastShot = time.time()
