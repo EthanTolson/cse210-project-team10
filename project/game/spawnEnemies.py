@@ -9,45 +9,6 @@ from game import constants as const
 
 class SpawnEnemies():
 
-    def spawnEnemies(director):
-        if director.level <= 1000:
-            if director.level % 30 == 0 or director.level % 50 == 0 and director.level > 0:
-                SpawnEnemies.spawnBoss(director)
-                SpawnEnemies.spawnShooterBoss(director)
-            elif director.level > 5 and director.level % 3 == 0:
-                for i in range(0, int(director.level / 3)):
-                    if len(director.enemySprites) <= 250:
-                        if i % 2:
-                            SpawnEnemies.spawnSprinterTB(director)
-                        else:
-                            SpawnEnemies.spawnSprinterLR(director)
-                
-                for i in range(0, 3 * director.level):   
-                    if len(director.enemySprites) <= 250:           
-                        if i % 2:
-                            SpawnEnemies.spawnZombieTB(director)
-                        else:
-                            SpawnEnemies.spawnZombieLR(director)
-
-            elif director.level > 10 and director.level % 5 == 0:
-                for i in range(0, int(director.level/5)):
-                    if len(director.enemySprites) <= 250:
-                        SpawnEnemies.spawnHeavy(director)
-                        for i in range(0, 10):
-                            if len(director.enemySprites) <= 250:
-                                if i % 2:
-                                    SpawnEnemies.spawnZombieTB(director)
-                                else:
-                                    SpawnEnemies.spawnZombieLR(director)
-
-            else:
-                for i in range(0, 3 * director.level):
-                    if len(director.enemySprites) <= 250:
-                        if i % 2:
-                            SpawnEnemies.spawnZombieTB(director)
-                        else:
-                            SpawnEnemies.spawnZombieLR(director)
-
     def spawnShooterBoss(director):
         enemy = BossShooterSprite(const.RESOURCE_PATH + "robotbossPNG.png", const.SCALING + .5) 
         enemy.center_x = random.randint(0, 6200)
@@ -119,3 +80,41 @@ class SpawnEnemies():
         enemy.setDirector(director)
         director.enemySprites.append(enemy)
         director.allSprites.append(enemy)
+
+    def spawnEnemies(director):
+        if director.level % 10 == 0:
+            for i in range(0, int(director.level/5)):
+                if len(director.enemySprites) < 30 and (director.level / 10) % 2 != 0:
+                    SpawnEnemies.spawnBoss(director)
+                elif len(director.enemySprites) < 30 and (director.level / 10) % 2 == 0:
+                    SpawnEnemies.spawnShooterBoss(director)
+        elif director.level < 5:
+            for i in range(0, 5 * director.level):
+                if len(director.enemySprites) <= 250:
+                    if i % 2:
+                        SpawnEnemies.spawnZombieTB(director)
+                    else:
+                        SpawnEnemies.spawnZombieLR(director)
+        else:
+            if director.level * 3 < 250:
+                numEnemies = director.level * 3
+            else:
+                numEnemies = 250
+                
+            for i in range(0, int(numEnemies * .1)):
+                SpawnEnemies.spawnShooter(director)
+
+            for i in range(0, int(numEnemies * .2)):
+                if i % 2:
+                    SpawnEnemies.spawnSprinterTB(director)
+                else:
+                    SpawnEnemies.spawnSprinterLR(director)
+
+            for i in range(0, int(numEnemies * .05)):
+                SpawnEnemies.spawnHeavy(director)
+
+            for i in range(0, int(numEnemies * .65)):
+                if i % 2:
+                    SpawnEnemies.spawnZombieTB(director)
+                else:
+                    SpawnEnemies.spawnZombieLR(director)
