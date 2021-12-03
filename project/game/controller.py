@@ -1,15 +1,17 @@
 import arcade
 import time
 import math
+
+from pyglet.media import player
 from game.endScreen import EndScreen
 
 class Controller():
-    def keyevent(director, symbol):
+    def keyevent(director, symbol, playerDeath = False):
         if symbol == arcade.key.F:
                     director.window.set_fullscreen(not director.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
             director.pauseBool = True
-            if director.level == 1:
+            if director.level == 1 and not playerDeath:
                 director.level = -1
             director.player.stopFootSteps()
             gameView = EndScreen()
