@@ -2,6 +2,7 @@ import arcade
 import math
 import time
 from game import constants as const
+from game.controller import Controller
 from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
 from game.spawnEnemies import SpawnEnemies
@@ -114,30 +115,8 @@ class Director(arcade.View):
         """
         Checks for key presses and does corresponding action
         """
-        if symbol == arcade.key.F:
-            self.window.set_fullscreen(not self.window.fullscreen)
-        elif symbol == arcade.key.ESCAPE:
-            self.pauseBool = True
-            if self.level == 1:
-                self.level = -1
-            self.player.stopFootSteps()
-            gameView = EndScreen()
-            gameView.setDirector(self)
-            self.window.show_view(gameView)
-        elif symbol == arcade.key.TAB:
-            self.help_bool = True
-        elif symbol == arcade.key.P:
-            self.pauseBool = not self.pauseBool
-        elif symbol == arcade.key.Q:
-            self.q.switchStance(self.player)
-        elif symbol == arcade.key.E:
-            self.doubleDamage[0] = not self.doubleDamage[0]
-            if self.doubleDamage[1] != 1:
-                self.doubleDamage[1] = time.time()
-        elif symbol == arcade.key.R:
-            self.ult[0] = not self.ult[0]
-            if self.ult[1] != 1:
-                self.ult[1] = time.time()
+        Controller.keyevent(self, symbol)
+
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.TAB:
@@ -148,40 +127,8 @@ class Director(arcade.View):
         Checks for mouse clicks for movement updates player velocity 
         Also checks for mouse clicks for projectiles
         """
-        x = x + self.player.center_x - self.window.width/2
-        y = y + self.player.center_y - self.window.height/2
-        
-        if not self.pauseBool:
-            
-            if button == arcade.MOUSE_BUTTON_RIGHT:
-                #These if statements prevent wall kiting
-                if x < 170:
-                    x = 170
-                elif x > 6040:
-                    x = 6040
-
-                if y < 170:
-                    y = 170
-                elif y > 6230:
-                    y = 6230
-
-                self.player.movement(x,y)
-                self.lastEventY = y
-                self.lastEventX = x
-
-            self.player.angle = math.atan2(y - self.player.center_y, x - self.player.center_x) * 180 / math.pi
-            
-            #Spawns the projectiles
-            if button == arcade.MOUSE_BUTTON_LEFT:
-                if self.q.shoot(self, x, y, self.player.center_y, self.player.center_x):
-                    arcade.play_sound(self.gunSound, volume= .2)
-                if self.doubleDamage[0] and self.doubleDamage[1] != 1:
-                    self.q.shoot(self, x, y, self.player.center_y, self.player.center_x)
-                    if self.q.shotsLeft[self.q.stance] != 0:
-                        self.q.shotsLeft[self.q.stance] += 1
-            
-            
-                
+        Controller.mouseevent(self, x, y, button)  
+                  
     def scroll_to_player(self):
         """
         Moves the camera center to the player to ensure player does not move off screen
