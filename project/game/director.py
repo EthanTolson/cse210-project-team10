@@ -98,7 +98,8 @@ class Director(arcade.View):
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
             self.pauseBool = True
-            self.level = 2
+            if self.level == 1:
+                self.level = -1
             self.player.stopFootSteps()
             gameView = EndScreen()
             gameView.setDirector(self)

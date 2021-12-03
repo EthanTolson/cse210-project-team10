@@ -10,6 +10,7 @@
 ---
 * Image Assets
     * kenny.nl
+
     * EnterReEnter
 
 * Sound Assets
@@ -37,10 +38,18 @@
 
 ## Authors
 ---
-* # TODO: Add your names and emails here
-
 Ethan Tolson - tol18009@byui.edu
 Stephen Nielsen - snielsen256@byui.edu
 Jace Wilderman - jwilderman@byui.edu
 Dawsin Miskin - miskindr13@gmail.com
 Austin Eldredge - eld20009@byui.edu
+
+## Testers
+---
+    * Ethan Tolson
+    * Stephen Nielsen
+    * Jace Wilderman
+    * Dawsin Miskin
+    * Austin Eldredge
+    * HDDagger
+    * Huskies2018/Kataclysm
