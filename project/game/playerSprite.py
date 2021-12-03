@@ -21,7 +21,7 @@ class PlayerSprite(arcade.Sprite):
 
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
-        self.player_hp = 3
+        self.player_hp = 30
         self.enemySprites = None
         self.collision = None
         self.lastEventX = None

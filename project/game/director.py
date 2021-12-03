@@ -31,7 +31,7 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 8
+        self.level = 0
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
