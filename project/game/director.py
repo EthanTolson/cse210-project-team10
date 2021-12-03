@@ -1,5 +1,4 @@
 import arcade
-import math
 import time
 from game import constants as const
 from game.controller import Controller
@@ -7,7 +6,6 @@ from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
 from game.spawnEnemies import SpawnEnemies
 from game.qAbility import QAbility
-from game.endScreen import EndScreen
 """
 Director Class:
 Class that hanldes the main game view. Inherits from Arcade View.
@@ -74,7 +72,7 @@ class Director(arcade.View):
                 SpawnEnemies.spawnEnemies(self)
                 self.player.setEnemySprites(self.enemySprites)
                 if self.level > 1001:
-                    arcade.close_window()
+                    Controller.keyevent(self, arcade.key.ESCAPE)
             if self.level % 10 == 0 and self.backgroundmusic.getPlayingID() != 2:
                 self.backgroundmusic.play(2)
             elif self.level % 10 != 0 and self.backgroundmusic.getPlayingID() != 1:
