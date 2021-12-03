@@ -37,9 +37,9 @@ class Director(arcade.View):
         self.pauseBool = False
         self.doubleDamage = [False, 0]
         self.ult = [False, 0]
-        self.deathsound = arcade.Sound(const.RESOURCE_PATH + "zombiedeathsound.ogg")
-        self.levelup = arcade.Sound(const.RESOURCE_PATH + "levelup.ogg")
-        self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.ogg")
+        self.deathsound = arcade.Sound(const.RESOURCE_PATH + "zombiedeathsound.mp3")
+        self.levelup = arcade.Sound(const.RESOURCE_PATH + "levelup.mp3")
+        self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.mp3")
         self.helpscreen = arcade.load_texture(const.RESOURCE_PATH + "helpPNG.png")        
 
     def on_update(self, delta_time: float):

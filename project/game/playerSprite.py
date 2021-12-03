@@ -27,7 +27,7 @@ class PlayerSprite(arcade.Sprite):
         self.lastEventX = None
         self.lastEventY = None
         self.hitCount = 0
-        self._moveSound = arcade.Sound(const.RESOURCE_PATH + "footstep1.ogg")
+        self._moveSound = arcade.Sound(const.RESOURCE_PATH + "footstep1.mp3")
         self._moveSound1 = None
         self.starttime = time.time()
         self.pause = True
