@@ -36,6 +36,8 @@ class Director(arcade.View):
         self.lastEventY = 0
         self.help_bool = False
         self.pauseBool = False
+        self.doubleDamage = [False, 0]
+        self.ult = [False, 0]
         self.deathsound = arcade.Sound(const.RESOURCE_PATH + "zombiedeathsound.ogg")
         self.levelup = arcade.Sound(const.RESOURCE_PATH + "levelup.ogg")
         self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.ogg")
@@ -46,12 +48,28 @@ class Director(arcade.View):
         Updates the sprites positions also spawns enemies if there are none
         """ 
         self.player.stopFootSteps()
+        if self.doubleDamage[1] + 5 <= time.time() and self.doubleDamage[1] != 0:
+            self.doubleDamage[1] = 1
+            self.doubleDamage[0] = False
         if not self.pauseBool:
             self.physicsEngine.update()
-            self.allSprites.update()
+            if self.ult[1] + 1.5 < time.time() and (self.ult[1] == 0 or self.ult[1] == 1):
+                self.ult[0] = False
+                self.enemySprites.update()
+            elif self.ult[1] + 1.5 > time.time():
+                self.ult[0] = True
+                pass
+            else:
+                self.ult[1] = 1
+
+            self.projectileSprites.update()
+            self.playerSprite.update()
             self.scroll_to_player()
             if len(self.enemySprites) == 0 and self.level < 1003:
                 self.levelup.play(.5)
+                self.doubleDamage[1] = 0
+                self.doubleDamage[0] = False
+                self.ult = [False, 0]
                 self.level += 1
                 SpawnEnemies.spawnEnemies(self)
                 self.player.setEnemySprites(self.enemySprites)
@@ -88,7 +106,7 @@ class Director(arcade.View):
             arcade.draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
             self.player.center_y - 200, 600 , 600, texture = self.helpscreen)
 
-        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left(Q to Switch Weapons): {self.q.getShotsLeft()} | TAB: Show Controls/Help",
+        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left: {self.q.getShotsLeft()} | E: {self.doubleDamage[0]} | R: {self.ult[0]} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)   
@@ -113,6 +131,14 @@ class Director(arcade.View):
             self.pauseBool = not self.pauseBool
         elif symbol == arcade.key.Q:
             self.q.switchStance(self.player)
+        elif symbol == arcade.key.E:
+            self.doubleDamage[0] = not self.doubleDamage[0]
+            if self.doubleDamage[1] != 1:
+                self.doubleDamage[1] = time.time()
+        elif symbol == arcade.key.R:
+            self.ult[0] = not self.ult[0]
+            if self.ult[1] != 1:
+                self.ult[1] = time.time()
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.TAB:
@@ -150,6 +176,10 @@ class Director(arcade.View):
             if button == arcade.MOUSE_BUTTON_LEFT:
                 if self.q.shoot(self, x, y, self.player.center_y, self.player.center_x):
                     arcade.play_sound(self.gunSound, volume= .2)
+                if self.doubleDamage[0] and self.doubleDamage[1] != 1:
+                    self.q.shoot(self, x, y, self.player.center_y, self.player.center_x)
+                    if self.q.shotsLeft[self.q.stance] != 0:
+                        self.q.shotsLeft[self.q.stance] += 1
             
             
                 
