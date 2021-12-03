@@ -11,6 +11,8 @@ class EndScreen(arcade.View):
         self.texture = arcade.load_texture(const.RESOURCE_PATH + "game_over.png")
         
     def on_update(self, delta_time: float):
+        if self.director.backgroundmusic.getPlayingID() != 3:
+            self.director.backgroundmusic.play(3)
         self.scroll_to_start
 
     def scroll_to_start(self):
@@ -35,12 +37,14 @@ class EndScreen(arcade.View):
             self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.ESCAPE:
             arcade.close_window()
-        elif symbol == arcade.key.ENTER: 
-            self.director.reset()
+        elif symbol == arcade.key.ENTER:
+            self.director.backgroundmusic.play(1)
+            self.director.reset(self.director.backgroundmusic)
             self.window.show_view(self.director)
             
     def setDirector(self, director):
         self.director = director
+        #director.backgroundmusic.play(3)
 
     def on_resize(self, width: int, height: int):
         """

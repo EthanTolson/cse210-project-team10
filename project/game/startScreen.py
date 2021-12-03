@@ -2,6 +2,7 @@ from arcade.color import BLACK
 from game.director import Director
 import arcade
 from game import constants as const
+from game.backgroundMusic import BackgroundMusic
 
 """
 startScreen Class:
@@ -25,6 +26,8 @@ class StartScreen(arcade.View):
         self.j = 0
         self.k = 0
         self.instructions = False
+        self.music = BackgroundMusic()
+        self.music.play(0)
 
     def on_update(self, delta_time: float):
         self.mapViewLoop()
@@ -61,9 +64,9 @@ class StartScreen(arcade.View):
         self.camera_sprites.use()
         self.player.draw()
         arcade.draw_lrtb_rectangle_outline(self.player.center_x -self.window.width /2 + 100, self.player.center_x + self.window.width /2 - 100, self.player.center_y + self.window.height /2 - 100, self.player.center_y - self.window.height /2 + 100,  color = BLACK, border_width= 20)
-        arcade.draw_text("Zombie Shooter", self.player.center_x, self.player.center_y + 60, font_size = 123, anchor_x = "center", color = BLACK)   
-        arcade.draw_text("Press Enter to Begin", self.player.center_x, self.player.center_y - 200, font_size = 77, anchor_x="center", color = BLACK)
-        arcade.draw_text("Tab: Controls", self.player.center_x, self.player.center_y - 300, font_size = 51, anchor_x="center", color = BLACK)
+        arcade.draw_text("Zombie Shooter", self.player.center_x-2, self.player.center_y + 60, font_size = 120, anchor_x = "center", color = BLACK)   
+        arcade.draw_text("Press Enter to Begin", self.player.center_x-2, self.player.center_y - 200, font_size = 75, anchor_x="center", color = BLACK)
+        arcade.draw_text("Tab: Controls", self.player.center_x-2, self.player.center_y - 300, font_size = 50, anchor_x="center", color = BLACK)
         arcade.draw_text("Zombie Shooter", self.player.center_x, self.player.center_y + 60, font_size = 120, anchor_x = "center", color = arcade.color.RED_DEVIL)   
         arcade.draw_text("Press Enter to Begin", self.player.center_x, self.player.center_y - 200, font_size = 75, anchor_x="center", color = arcade.color.RED_DEVIL)
         arcade.draw_text("Tab: Controls", self.player.center_x, self.player.center_y - 300, font_size = 50, anchor_x="center", color = arcade.color.RED_DEVIL)
@@ -89,8 +92,9 @@ class StartScreen(arcade.View):
         elif symbol == arcade.key.TAB:
             self.instructions = not self.instructions
         elif symbol == arcade.key.ENTER: 
+            self.music.play(1)
             gameView = Director()
-            gameView.setup()
+            gameView.setup(self.music)
             self.window.show_view(gameView)
 
     def on_resize(self, width: int, height: int):

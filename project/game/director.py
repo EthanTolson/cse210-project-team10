@@ -31,14 +31,13 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 0
+        self.level = 8
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
         self.pauseBool = False
         self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.ogg")
-        self.helpscreen = arcade.load_texture(const.RESOURCE_PATH + "helpPNG.png")
-        
+        self.helpscreen = arcade.load_texture(const.RESOURCE_PATH + "helpPNG.png")        
 
     def on_update(self, delta_time: float):
         """
@@ -55,6 +54,10 @@ class Director(arcade.View):
                 self.player.setEnemySprites(self.enemySprites)
                 if self.level > 1001:
                     arcade.close_window()
+            if self.level % 10 == 0 and self.backgroundmusic.getPlayingID() != 2:
+                self.backgroundmusic.play(2)
+            elif self.level % 10 != 0 and self.backgroundmusic.getPlayingID() != 1:
+                self.backgroundmusic.play(1)
         
     def on_draw(self):
         """
@@ -159,7 +162,7 @@ class Director(arcade.View):
         """
         self.camera_sprites.resize(int(width), int(height))
 
-    def reset(self):
+    def reset(self, music):
         self.playerSprite = arcade.SpriteList()
         self.enemySprites = arcade.SpriteList()
         self.projectileSprites = arcade.SpriteList()
@@ -170,9 +173,9 @@ class Director(arcade.View):
         self.lastEventY = 0
         self.help_bool = False
         self.pauseBool = False
-        self.setup()
+        self.setup(music)
        
-    def setup(self):
+    def setup(self, music):
         """
         Setup for before first update cycle
         creates the player object
@@ -180,7 +183,6 @@ class Director(arcade.View):
         self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG1.png", const.SCALING) 
         self.player.center_x = 3200
         self.player.center_y = 3200
-        self.player.setDirector(self)
         self.score = 0
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
@@ -191,6 +193,7 @@ class Director(arcade.View):
             }
         }
         self.tileMap = arcade.load_tilemap(const.RESOURCE_PATH + "background.json", 2, layer_options)
-        
+        self.backgroundmusic = music
+        self.player.setDirector(self)
         self.scene = arcade.Scene.from_tilemap(self.tileMap)
         self.physicsEngine = arcade.PhysicsEngineSimple(self.player, self.scene["walls"])
