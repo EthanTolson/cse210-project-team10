@@ -38,7 +38,7 @@ class BossShooterSprite(arcade.Sprite):
         if math.sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) < 500 and self.lastShot + 1 < time.time():
             self.lastShot = time.time()
             SpawnEnemyProjectiles.spawnProjectiles(self.director, self.center_x, self.center_y, self)
-            SpawnEnemyProjectiles.spawnProjectiles(self.director, self.center_x, self.center_y, self)
+            
         if self.hitPoints <= 0:
             self.director.score += self.points
             self.remove_from_sprite_lists()

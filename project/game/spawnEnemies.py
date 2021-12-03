@@ -11,7 +11,6 @@ class SpawnEnemies():
 
     def spawnEnemies(director):
         if director.level <= 1000:
-            SpawnEnemies.spawnShooter(director)
             if director.level % 30 == 0 or director.level % 50 == 0 and director.level > 0:
                 SpawnEnemies.spawnBoss(director)
                 SpawnEnemies.spawnShooterBoss(director)
