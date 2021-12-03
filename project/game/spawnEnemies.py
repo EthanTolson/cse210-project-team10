@@ -11,6 +11,7 @@ class SpawnEnemies():
 
     def spawnEnemies(director):
         if director.level <= 1000:
+            SpawnEnemies.spawnShooter(director)
             if director.level % 30 == 0 or director.level % 50 == 0 and director.level > 0:
                 SpawnEnemies.spawnBoss(director)
                 SpawnEnemies.spawnShooterBoss(director)
@@ -58,7 +59,7 @@ class SpawnEnemies():
         director.allSprites.append(enemy)
 
     def spawnShooter(director):
-        enemy = ShooterSprite(const.RESOURCE_PATH + "shooterPNG.png", const.SCALING + 1.0) 
+        enemy = ShooterSprite(const.RESOURCE_PATH + "shooterPNG.png", const.SCALING) 
         enemy.center_x = random.randint(0, 6400)
         enemy.center_y = random.randrange(-50, 6450, 6489)
         enemy.setPlayer(director.player)
