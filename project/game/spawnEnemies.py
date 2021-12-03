@@ -49,7 +49,7 @@ class SpawnEnemies():
                             SpawnEnemies.spawnZombieLR(director)
 
     def spawnShooterBoss(director):
-        enemy = BossShooterSprite(const.RESOURCE_PATH + "robotbossPNG.png", const.SCALING + 1.0) 
+        enemy = BossShooterSprite(const.RESOURCE_PATH + "robotbossPNG.png", const.SCALING + .5) 
         enemy.center_x = random.randint(0, 6200)
         enemy.center_y = 6220
         enemy.setPlayer(director.player)

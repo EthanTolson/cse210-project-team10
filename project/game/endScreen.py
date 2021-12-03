@@ -8,6 +8,7 @@ class EndScreen(arcade.View):
         super().__init__()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.director = None
+        self.texture = arcade.load_texture(const.RESOURCE_PATH + "game_over.png")
         
     def on_update(self, delta_time: float):
         self.scroll_to_start
@@ -21,9 +22,10 @@ class EndScreen(arcade.View):
         """
         arcade.start_render()
         self.camera_sprites.use()
-        arcade.draw_lrtb_rectangle_outline(200,(self.window.width - 200),(self.window.height - 200),200, color = RED_DEVIL)
-        arcade.draw_text("GAME OVER", self.window.width*.25, self.window.height*.6, font_size = 100)   
-        arcade.draw_text("press enter to begin.", self.window.width*.2, self.window.height*.3, font_size = 75)
+        arcade.draw_lrtb_rectangle_outline(200,(self.window.width - 200),(self.window.height - 200),200, color = RED_DEVIL, border_width = 1000)
+        arcade.draw_lrwh_rectangle_textured(200, 200, self.window.width - 400, self.window.height - 400, self.texture)
+        arcade.draw_text("Press Enter to Retry", self.window.width/2 , self.window.height / 2 - 100, font_size = 75, anchor_x = "center")
+        arcade.draw_text("Esc: Quit Game", self.window.width/2 , self.window.height / 2 - 200, font_size = 75, anchor_x = "center")
 
     def on_key_press(self, symbol: int, modifiers: int):
         """
