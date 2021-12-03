@@ -16,7 +16,7 @@ class Controller():
             gameView.setDirector(director)
             director.window.show_view(gameView)
         elif symbol == arcade.key.TAB:
-            director.help_bool = True
+            director.help_bool = not director.help_bool
         elif symbol == arcade.key.P:
             director.pauseBool = not director.pauseBool
         elif symbol == arcade.key.Q:
@@ -29,6 +29,10 @@ class Controller():
             director.ult[0] = not director.ult[0]
             if director.ult[1] != 1:
                 director.ult[1] = time.time()
+
+    def keyremoveevent(director, symbol):
+        if symbol == arcade.key.TAB:
+            director.help_bool = not director.help_bool
     
     def mouseevent(director, x, y, button):
         x = x + director.player.center_x - director.window.width/2
