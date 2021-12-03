@@ -154,6 +154,8 @@ class Director(arcade.View):
         self.lastEventY = 0
         self.help_bool = False
         self.pauseBool = False
+        self.doubleDamage = [False, 0]
+        self.ult = [False, 0]
         self.setup(music)
        
     def setup(self, music):
