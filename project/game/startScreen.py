@@ -61,12 +61,15 @@ class StartScreen(arcade.View):
         self.camera_sprites.use()
         self.player.draw()
         arcade.draw_lrtb_rectangle_outline(self.player.center_x -self.window.width /2 + 100, self.player.center_x + self.window.width /2 - 100, self.player.center_y + self.window.height /2 - 100, self.player.center_y - self.window.height /2 + 100,  color = BLACK, border_width= 20)
-        arcade.draw_text("Zombie Shooter", self.player.center_x, self.player.center_y + 60, font_size = 120, anchor_x = "center")   
-        arcade.draw_text("Press Enter to Begin", self.player.center_x, self.player.center_y - 200, font_size = 75, anchor_x="center")
-        arcade.draw_text("Tab: Controls", self.player.center_x, self.player.center_y - 300, font_size = 50, anchor_x="center")
+        arcade.draw_text("Zombie Shooter", self.player.center_x, self.player.center_y + 60, font_size = 123, anchor_x = "center", color = BLACK)   
+        arcade.draw_text("Press Enter to Begin", self.player.center_x, self.player.center_y - 200, font_size = 77, anchor_x="center", color = BLACK)
+        arcade.draw_text("Tab: Controls", self.player.center_x, self.player.center_y - 300, font_size = 51, anchor_x="center", color = BLACK)
+        arcade.draw_text("Zombie Shooter", self.player.center_x, self.player.center_y + 60, font_size = 120, anchor_x = "center", color = arcade.color.RED_DEVIL)   
+        arcade.draw_text("Press Enter to Begin", self.player.center_x, self.player.center_y - 200, font_size = 75, anchor_x="center", color = arcade.color.RED_DEVIL)
+        arcade.draw_text("Tab: Controls", self.player.center_x, self.player.center_y - 300, font_size = 50, anchor_x="center", color = arcade.color.RED_DEVIL)
         if self.instructions:
             arcade.draw_lrwh_rectangle_textured(self.player.center_x - 300, self.player.center_y - 300, 600, 600, self.helpscreen)
-        
+    
     def scroll_to_player(self):
         """
         Moves the camera center to the player to ensure player does not move off screen
