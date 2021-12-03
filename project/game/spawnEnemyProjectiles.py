@@ -1,8 +1,8 @@
 import math
 from game import constants as const
-from game.projectile import ProjectileSprite
+from game.enemyProjectile import ProjectileSprite
 
-class SpawnProjectiles():
+class SpawnEnemyProjectiles():
 
     def spawnProjectiles(director, x, y, shooterSprite):
             """
@@ -16,7 +16,8 @@ class SpawnProjectiles():
             projectile.center_x = shooterSprite.center_x + math.sin(math.pi/180 * (shooterSprite.angle + 45.8550973963)) * 33.54 # Calculates the offset for the bullet to shoot out of the gun
             projectile.center_y = shooterSprite.center_y - math.cos(math.pi/180 * (shooterSprite.angle + 45.8550973963)) * 33.54 # Calculates the offset for the bullet to shoot out of the gun
         
-            projectile.change_x = 20 * ((x - shooterSprite.center_x ) / math.sqrt((x-shooterSprite.center_x)**2 + (y- shooterSprite.center_y)**2))
-            projectile.change_y = 20 * ((y - shooterSprite.center_y ) / math.sqrt((x-shooterSprite.center_x)**2 + (y- shooterSprite.center_y)**2))
+            projectile.change_x = 20 * ((director.player.center_x - x) / math.sqrt((x-director.player.center_x)**2 + (y- director.player.center_y)**2))
+            projectile.change_y = 20 * ((director.player.center_y - y) / math.sqrt((x-director.player.center_x)**2 + (y- director.player.center_y)**2))
+            projectile.setDamage(shooterSprite.getDamage())
             director.projectileSprites.append(projectile)
             director.allSprites.append(projectile)

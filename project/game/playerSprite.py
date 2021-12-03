@@ -51,10 +51,9 @@ class PlayerSprite(arcade.Sprite):
                 self.change_y = 0
         if self.enemySprites != None:
             self.collision = self.collides_with_list(self.enemySprites)
-            if len(self.collision) != 0 and (self.starttime + 2.5 <= time.time() or self.hitCount < 1):
+            if len(self.collision) != 0:
                 self.onHit(self.collision[0].getDamage())
-                self.starttime = time.time()
-                self.hitCount += 1
+                
         
 
     def setEnemySprites(self, enemy_sprite_list):
@@ -67,7 +66,10 @@ class PlayerSprite(arcade.Sprite):
         return 30
 
     def onHit(self, damage = 3):
-        self.player_hp -= damage
+        if (self.starttime + 2.5 <= time.time() or self.hitCount < 1):
+            self.player_hp -= damage
+            self.starttime = time.time()
+            self.hitCount += 1
 
     def setDirector(self, director):
         self.director = director
