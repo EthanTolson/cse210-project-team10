@@ -6,6 +6,7 @@ class BackgroundMusic():
         self.startmusic = arcade.Sound(const.RESOURCE_PATH + "startmusic.mp3")
         self.bossmusic = arcade.Sound(const.RESOURCE_PATH + "bossmusic.mp3")
         self.endmusic = arcade.Sound(const.RESOURCE_PATH + "endmusic.mp3")
+        self.endmusic1 = arcade.Sound(const.RESOURCE_PATH + "endmusic1.mp3")
         self.backgroundmusic = arcade.Sound(const.RESOURCE_PATH + "backgroundmusic.mp3")
         self.playing = None
         self.id = 0
@@ -24,6 +25,9 @@ class BackgroundMusic():
         elif soundID == 3:
             self.playing = arcade.play_sound(self.endmusic, volume = .3, looping = True)
             self.id = soundID
+        elif soundID == 4:
+            self.playing = arcade.play_sound(self.endmusic1, volume = .3, looping = True)
+            self.id = soundID
 
     def stopPlay(self):
         if self.playing != None:
@@ -35,6 +39,8 @@ class BackgroundMusic():
                 self.bossmusic.stop(self.playing)
             elif self.endmusic.is_playing(self.playing):
                 self.endmusic.stop(self.playing)
+            elif self.endmusic1.is_playing(self.playing):
+                self.endmusic1.stop(self.playing)
 
     def getPlayingID(self):
         return self.id
