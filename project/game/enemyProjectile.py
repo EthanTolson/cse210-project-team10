@@ -21,7 +21,7 @@ class ProjectileSprite(Sprite):
 
     def update(self):
         super().update()
-        if sqrt((self.positionUsedY - self.center_y)**2 + (self.positionUsedX - self.center_x)**2) > 600:
+        if sqrt((self.positionUsedY - self.center_y) ** 2 + (self.positionUsedX - self.center_x) ** 2) > 600:
             self.remove_from_sprite_lists()
 
         collisionList = self.collides_with_list(self.spriteList)

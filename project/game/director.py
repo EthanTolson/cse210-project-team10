@@ -1,19 +1,8 @@
-from arcade import SpriteList
-from arcade import Camera
-from arcade import View
-from arcade import Sound
-from arcade import load_texture
-from arcade import key
-from arcade import start_render
-from arcade import draw_text
-from arcade import draw_lrwh_rectangle_textured
-from arcade import draw_lrtb_rectangle_outline
-from arcade import color
-from arcade import load_tilemap
-from arcade import Scene
-from arcade import PhysicsEngineSimple
+from arcade import SpriteList, View, Camera, Sound, Scene, PhysicsEngineSimple, load_texture, start_render, draw_text, draw_lrwh_rectangle_textured, draw_lrtb_rectangle_outline, load_tilemap
+from arcade.key import ESCAPE
+from arcade.color import GRAPE, BLACK, WHITE
 from time import time
-from game import constants as const
+from game.constants import RESOURCE_PATH, SCALING
 from game.controller import Controller
 from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
@@ -52,12 +41,12 @@ class Director(View):
         self.doubleDamage = [False, 0]
         self.ult = [False, 0]
         self.grenade = [False, 2]
-        self.deathsound = Sound("".join([const.RESOURCE_PATH, "zombiedeathsound.mp3"]))
-        self.levelup = Sound("".join([const.RESOURCE_PATH, "levelup.mp3"]))
-        self.gunSound = Sound("".join([const.RESOURCE_PATH, "gunshot.mp3"]))
-        self.shotgunSound = Sound("".join([const.RESOURCE_PATH, "shotgunshot.mp3"]))
-        self.reloadSound = Sound("".join([const.RESOURCE_PATH, "reload.mp3"]))
-        self.helpscreen = load_texture("".join([const.RESOURCE_PATH, "helpPNG.png"]))        
+        self.deathsound = Sound("".join([RESOURCE_PATH, "zombiedeathsound.mp3"]))
+        self.levelup = Sound("".join([RESOURCE_PATH, "levelup.mp3"]))
+        self.gunSound = Sound("".join([RESOURCE_PATH, "gunshot.mp3"]))
+        self.shotgunSound = Sound("".join([RESOURCE_PATH, "shotgunshot.mp3"]))
+        self.reloadSound = Sound("".join([RESOURCE_PATH, "reload.mp3"]))
+        self.helpscreen = load_texture("".join([RESOURCE_PATH, "helpPNG.png"]))        
 
     def on_update(self, delta_time: float):
         """
@@ -95,7 +84,7 @@ class Director(View):
                 SpawnEnemies.spawnEnemies(self)
                 self.player.setEnemySprites(self.enemySprites)
                 if self.level > 1001:
-                    Controller.keyevent(self, key.ESCAPE)
+                    Controller.keyevent(self, ESCAPE)
             if self.level % 10 == 0 and self.backgroundmusic.getPlayingID() != 2:
                 self.backgroundmusic.play(2)
             elif self.level % 10 != 0 and self.backgroundmusic.getPlayingID() != 1:
@@ -116,23 +105,23 @@ class Director(View):
 
         DrawHealthBars.drawHealthBars(self.playerSprite[0])
 
-        draw_text("x", self.lastEventX, self.lastEventY, color.GRAPE, 10, bold = True)
+        draw_text("x", self.lastEventX, self.lastEventY, GRAPE, 10, bold = True)
 
         self.camera_sprites.use()
         self.allSprites.draw()
 
-        draw_lrtb_rectangle_outline(-500, 6900, 6900, -500, color.BLACK, 1000)  
+        draw_lrtb_rectangle_outline(-500, 6900, 6900, -500, BLACK, 1000)  
 
         drawHUD.drawHUD(self)
 
         if self.help_bool or self.pauseBool:
-            draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
+            draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 - 10,
             self.player.center_y - 200, 600 , 600, texture = self.helpscreen)
 
-        draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left: {self.q.getShotsLeft()} | TAB: Show Controls/Help",
+        draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
-         color.WHITE, 14)   
+         WHITE, 14)   
 
     def on_key_press(self, symbol: int, modifiers: int):
         """
@@ -188,7 +177,7 @@ class Director(View):
         Setup for before first update cycle
         creates the player object
         """
-        self.player = PlayerSprite("".join([const.RESOURCE_PATH,"playerPNG1.png"]), const.SCALING) 
+        self.player = PlayerSprite("".join([RESOURCE_PATH,"playerPNG1.png"]), SCALING) 
         self.player.center_x = 3200
         self.player.center_y = 3200
         self.score = 0
@@ -200,7 +189,7 @@ class Director(View):
                 "use_spatial_hash": True,
             }
         }
-        self.tileMap = load_tilemap("".join([const.RESOURCE_PATH,"background.json"]), 2, layer_options)
+        self.tileMap = load_tilemap("".join([RESOURCE_PATH,"background.json"]), 2, layer_options)
         self.backgroundmusic = music
         self.player.setDirector(self)
         self.scene = Scene.from_tilemap(self.tileMap)

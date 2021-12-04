@@ -1,14 +1,14 @@
 from arcade import Sound
 from arcade import play_sound
-from game import constants as const
+from game.constants import RESOURCE_PATH
 
 class BackgroundMusic():
     def __init__(self):
-        self.startmusic = Sound(const.RESOURCE_PATH + "startmusic.mp3")
-        self.bossmusic = Sound(const.RESOURCE_PATH + "bossmusic.mp3")
-        self.endmusic = Sound(const.RESOURCE_PATH + "endmusic.mp3")
-        self.endmusic1 = Sound(const.RESOURCE_PATH + "endmusic1.mp3")
-        self.backgroundmusic = Sound(const.RESOURCE_PATH + "backgroundmusic.mp3")
+        self.startmusic = Sound("".join([RESOURCE_PATH, "startmusic.mp3"]))
+        self.bossmusic = Sound("".join([RESOURCE_PATH, "bossmusic.mp3"]))
+        self.endmusic = Sound("".join([RESOURCE_PATH, "endmusic.mp3"]))
+        self.endmusic1 = Sound("".join([RESOURCE_PATH, "endmusic1.mp3"]))
+        self.backgroundmusic = Sound("".join([RESOURCE_PATH, "backgroundmusic.mp3"]))
         self.playing = None
         self.id = 0
 

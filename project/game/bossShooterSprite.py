@@ -1,7 +1,5 @@
 from arcade import Sprite
-from math import sqrt
-from math import pi
-from math import atan2
+from math import sqrt, atan2, pi
 from time import time
 from game.spawnEnemyProjectiles import SpawnEnemyProjectiles
 
@@ -27,17 +25,19 @@ class BossShooterSprite(Sprite):
         
     def update(self):
         super().update()
-
+        playercenterx = self.player.center_x
+        playercentery = self.player.center_y
+        distance = sqrt((self.center_x - playercenterx) ** 2 + (self.center_y - playercentery) ** 2)
         if self.lastShot + 1 < time():
-            self.change_x = 5 * (( self.player.center_x - self.center_x ) / sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-            self.change_y = 5 * (( self.player.center_y - self.center_y ) / sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+            self.change_x = 5 * (( playercenterx - self.center_x ) / distance)
+            self.change_y = 5 * (( playercentery - self.center_y ) / distance)
         else:
             self.change_x = 0
             self.change_y = 0
 
-        self.angle = atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / pi
+        self.angle = atan2(playercentery - self.center_y, playercenterx - self.center_x) * 180 / pi
 
-        if sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) < 500 and self.lastShot + 1 < time():
+        if distance < 500 and self.lastShot + 1 < time():
             self.lastShot = time()
             SpawnEnemyProjectiles.spawnProjectiles(self.director, self.center_x, self.center_y, self)
             

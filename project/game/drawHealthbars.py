@@ -1,7 +1,6 @@
-from arcade import draw_rectangle_filled
-from arcade import draw_text
-from arcade import color
-from game import constants as const
+from arcade import draw_rectangle_filled, draw_text
+from arcade.color import WHITE, GREEN, RED
+from game.constants import HEALTHBAR_HEIGHT, HEALTHBAR_OFFSET_Y, HEALTHBAR_WIDTH
 
 class DrawHealthBars():
     
@@ -9,22 +8,28 @@ class DrawHealthBars():
         """
         Method for drawing health bars above enemies and player separated from on draw due to being repeated
         """
-        health_width = const.HEALTHBAR_WIDTH * (sprite.getHealth() / sprite.getMaxHealth())
-        if sprite.getHealth() < sprite.getMaxHealth():
-            draw_rectangle_filled(center_x = sprite.center_x,
-                    center_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y * sprite.scale,
-                    width=const.HEALTHBAR_WIDTH,
-                    height=const.HEALTHBAR_HEIGHT * 2 / 3,
-                    color=color.RED)
-        if sprite.getHealth() >= 0:
-            draw_rectangle_filled(center_x=sprite.center_x - 0.5 * \
-                        (const.HEALTHBAR_WIDTH - health_width),
-                        center_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y * sprite.scale,
-                        width=health_width,
-                        height=const.HEALTHBAR_HEIGHT,
-                        color=color.GREEN)
-            draw_text(f"{sprite.getHealth()}/{sprite.getMaxHealth()}",
-                        start_x=sprite.center_x,
-                        start_y=sprite.center_y + const.HEALTHBAR_OFFSET_Y * sprite.scale,
-                        font_size=12,
-                        color=color.WHITE, anchor_x="center")
+        y = sprite.center_y + HEALTHBAR_OFFSET_Y * sprite.scale
+        x = sprite.center_x
+        spritehealth = sprite.getHealth()
+        spritemaxhealth = sprite.getMaxHealth()
+        health_width = HEALTHBAR_WIDTH * (spritehealth / spritemaxhealth)
+
+        if spritehealth < spritemaxhealth:
+            draw_rectangle_filled(center_x = x,
+                    center_y = y,
+                    width = HEALTHBAR_WIDTH,
+                    height = HEALTHBAR_HEIGHT * 2 / 3,
+                    color = RED)
+
+        if spritehealth >= 0:
+            draw_rectangle_filled(center_x = x - 0.5 * (HEALTHBAR_WIDTH - health_width),
+                        center_y = y,
+                        width = health_width,
+                        height = HEALTHBAR_HEIGHT,
+                        color = GREEN)
+
+            draw_text(f"{spritehealth}/{spritemaxhealth}",
+                        start_x = x,
+                        start_y = y,
+                        font_size = 12,
+                        color = WHITE, anchor_x = "center")
