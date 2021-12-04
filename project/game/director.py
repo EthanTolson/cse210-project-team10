@@ -44,7 +44,7 @@ class Director(View):
         self.allSprites = SpriteList()
         self.camera_sprites = Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 19
+        self.level = 0
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
