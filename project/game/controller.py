@@ -1,15 +1,19 @@
-import arcade
-import time
-import math
+from time import time
+from math import atan2
+from math import pi
+from arcade import MOUSE_BUTTON_RIGHT
+from arcade import MOUSE_BUTTON_LEFT
+from arcade import key
+from arcade import play_sound
 from game.endScreen import EndScreen
 from game.spawnGrenadeSprite import SpawnGrenade
 
 
 class Controller():
     def keyevent(director, symbol, playerDeath = False):
-        if symbol == arcade.key.F:
+        if symbol == key.F:
                     director.window.set_fullscreen(not director.window.fullscreen)
-        elif symbol == arcade.key.ESCAPE:
+        elif symbol == key.ESCAPE:
             director.pauseBool = True
             if director.level == 1 and not playerDeath:
                 director.level = -1
@@ -17,25 +21,25 @@ class Controller():
             gameView = EndScreen()
             gameView.setDirector(director)
             director.window.show_view(gameView)
-        elif symbol == arcade.key.TAB:
+        elif symbol == key.TAB:
             director.help_bool = not director.help_bool
-        elif symbol == arcade.key.P:
+        elif symbol == key.P:
             director.pauseBool = not director.pauseBool
-        elif symbol == arcade.key.Q:
+        elif symbol == key.Q:
             director.q.switchStance(director.player)
-        elif symbol == arcade.key.E:
+        elif symbol == key.E:
             director.doubleDamage[0] = not director.doubleDamage[0]
             if director.doubleDamage[1] != 1:
-                director.doubleDamage[1] = time.time()
-        elif symbol == arcade.key.R:
+                director.doubleDamage[1] = time()
+        elif symbol == key.R:
             director.ult[0] = not director.ult[0]
             if director.ult[1] != 1:
-                director.ult[1] = time.time()
-        elif symbol == arcade.key.W:
+                director.ult[1] = time()
+        elif symbol == key.W:
             director.grenade[0] = not director.grenade[0]
 
     def keyremoveevent(director, symbol):
-        if symbol == arcade.key.TAB:
+        if symbol == key.TAB:
             director.help_bool = not director.help_bool
     
     def mouseevent(director, x, y, button):
@@ -44,7 +48,7 @@ class Controller():
         
         if not director.pauseBool:
             
-            if button == arcade.MOUSE_BUTTON_RIGHT:
+            if button == MOUSE_BUTTON_RIGHT:
                 #These if statements prevent wall kiting
                 if x < 170:
                     x = 170
@@ -60,20 +64,20 @@ class Controller():
                 director.lastEventY = y
                 director.lastEventX = x
 
-            director.player.angle = math.atan2(y - director.player.center_y, x - director.player.center_x) * 180 / math.pi
+            director.player.angle = atan2(y - director.player.center_y, x - director.player.center_x) * 180 / pi
             
             #Spawns the projectiles
-            if button == arcade.MOUSE_BUTTON_LEFT and not director.grenade[0]:
+            if button == MOUSE_BUTTON_LEFT and not director.grenade[0]:
                 if director.q.shoot(director, x, y, director.player.center_y, director.player.center_x):
                     if director.q.getStance() == 0:
-                        arcade.play_sound(director.gunSound, volume= .2)
+                        play_sound(director.gunSound, volume= .2)
                     else:
-                        arcade.play_sound(director.shotgunSound, volume= .25)
+                        play_sound(director.shotgunSound, volume= .25)
                 if director.doubleDamage[0] and director.doubleDamage[1] != 1:
                     director.q.shoot(director, x, y, director.player.center_y, director.player.center_x)
                     if director.q.shotsLeft[director.q.stance] != 0:
                         director.q.shotsLeft[director.q.stance] += 1
-            elif button == arcade.MOUSE_BUTTON_LEFT and director.grenade[0] and director.grenade[1] > 0:
+            elif button == MOUSE_BUTTON_LEFT and director.grenade[0] and director.grenade[1] > 0:
                 director.grenade[1] -= 1
                 SpawnGrenade.spawnGrenade(director, x, y)
                 director.grenade[0] = False

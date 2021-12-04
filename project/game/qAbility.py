@@ -1,5 +1,8 @@
 import arcade
-import math
+from math import sqrt
+from math import atan2
+from math import sin
+from math import cos
 from game import constants as const
 from game.spawnProjectiles import SpawnProjectiles
 
@@ -36,8 +39,8 @@ class QAbility():
                 return True
             elif self.stance == 1:
                 SpawnProjectiles.spawnProjectiles(director, x, y)
-                SpawnProjectiles.spawnProjectiles(director, math.cos( math.atan2(y - playery, x - playerx) + .26799) * math.sqrt((x - playerx)**2 + (y - playery)**2) + playerx, math.sin( math.atan2(y - playery, x - playerx) + .26799) * math.sqrt((x - playerx)**2 + (y - playery)**2)+ playery)
-                SpawnProjectiles.spawnProjectiles(director, math.cos( math.atan2(y - playery, x - playerx) - .26799) * math.sqrt((x - playerx)**2 + (y - playery)**2) + playerx, math.sin( math.atan2(y - playery, x - playerx) - .26799) * math.sqrt((x - playerx)**2 + (y - playery)**2)+ playery)
+                SpawnProjectiles.spawnProjectiles(director, cos( atan2(y - playery, x - playerx) + .26799) * sqrt((x - playerx)**2 + (y - playery)**2) + playerx, sin( atan2(y - playery, x - playerx) + .26799) * sqrt((x - playerx)**2 + (y - playery)**2)+ playery)
+                SpawnProjectiles.spawnProjectiles(director, cos( atan2(y - playery, x - playerx) - .26799) * sqrt((x - playerx)**2 + (y - playery)**2) + playerx, sin( atan2(y - playery, x - playerx) - .26799) * sqrt((x - playerx)**2 + (y - playery)**2)+ playery)
                 self.shotsLeft[self.stance] -= 1
                 return True
         else:

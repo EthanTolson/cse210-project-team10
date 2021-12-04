@@ -1,32 +1,33 @@
-import arcade
+from arcade import Sound
+from arcade import play_sound
 from game import constants as const
 
 class BackgroundMusic():
     def __init__(self):
-        self.startmusic = arcade.Sound(const.RESOURCE_PATH + "startmusic.mp3")
-        self.bossmusic = arcade.Sound(const.RESOURCE_PATH + "bossmusic.mp3")
-        self.endmusic = arcade.Sound(const.RESOURCE_PATH + "endmusic.mp3")
-        self.endmusic1 = arcade.Sound(const.RESOURCE_PATH + "endmusic1.mp3")
-        self.backgroundmusic = arcade.Sound(const.RESOURCE_PATH + "backgroundmusic.mp3")
+        self.startmusic = Sound(const.RESOURCE_PATH + "startmusic.mp3")
+        self.bossmusic = Sound(const.RESOURCE_PATH + "bossmusic.mp3")
+        self.endmusic = Sound(const.RESOURCE_PATH + "endmusic.mp3")
+        self.endmusic1 = Sound(const.RESOURCE_PATH + "endmusic1.mp3")
+        self.backgroundmusic = Sound(const.RESOURCE_PATH + "backgroundmusic.mp3")
         self.playing = None
         self.id = 0
 
     def play(self, soundID):
         self.stopPlay()
         if soundID == 0:
-            self.playing = arcade.play_sound(self.startmusic, volume = .3, looping = True)
+            self.playing = play_sound(self.startmusic, volume = .3, looping = True)
             self.id = soundID
         elif soundID == 1:
-            self.playing = arcade.play_sound(self.backgroundmusic, volume = .2, looping = True)
+            self.playing = play_sound(self.backgroundmusic, volume = .2, looping = True)
             self.id = soundID
         elif soundID == 2:
-            self.playing = arcade.play_sound(self.bossmusic, volume = .2, looping = True)
+            self.playing = play_sound(self.bossmusic, volume = .2, looping = True)
             self.id = soundID
         elif soundID == 3:
-            self.playing = arcade.play_sound(self.endmusic, volume = .3, looping = True)
+            self.playing = play_sound(self.endmusic, volume = .3, looping = True)
             self.id = soundID
         elif soundID == 4:
-            self.playing = arcade.play_sound(self.endmusic1, volume = .3, looping = True)
+            self.playing = play_sound(self.endmusic1, volume = .3, looping = True)
             self.id = soundID
 
     def stopPlay(self):

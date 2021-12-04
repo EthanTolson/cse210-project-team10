@@ -1,5 +1,5 @@
 import arcade
-import time
+from time import time
 from game import constants as const
 from game.controller import Controller
 from game.playerSprite import PlayerSprite
@@ -31,7 +31,7 @@ class Director(arcade.View):
         self.allSprites = arcade.SpriteList()
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 0
+        self.level = 19
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -51,17 +51,16 @@ class Director(arcade.View):
         Updates the sprites positions also spawns enemies if there are none
         """ 
         self.player.stopFootSteps()
-        if self.doubleDamage[1] + 5 <= time.time() and self.doubleDamage[1] != 0:
-            self.doubleDamage[1] = 1
-            self.doubleDamage[0] = False
+        if self.doubleDamage[1] + 5 <= time() and self.doubleDamage[1] != 0:
+            self.doubleDamage = [False, 1]
         if self.grenade[1] <= 0:
             self.grenade[0] = False
         if not self.pauseBool:
             self.physicsEngine.update()
-            if self.ult[1] + 1.5 < time.time() and (self.ult[1] == 0 or self.ult[1] == 1):
+            if self.ult[1] + 1.5 < time() and (self.ult[1] == 0 or self.ult[1] == 1):
                 self.ult[0] = False
                 self.enemySprites.update()
-            elif self.ult[1] + 1.5 > time.time():
+            elif self.ult[1] + 1.5 > time():
                 self.ult[0] = True
                 pass
             else:
@@ -75,8 +74,8 @@ class Director(arcade.View):
                     self.levelup.play(.7)
                 self.doubleDamage = [False, 0]
                 self.ult = [False, 0]
-                if self.level > 50:
-                    self.grenade = [False, 12]
+                if self.level > 25:
+                    self.grenade = [False, 6]
                 else:
                     self.grenade = [False, 2 + int(self.level/5)]
                 self.level += 1
@@ -99,7 +98,7 @@ class Director(arcade.View):
         #Healthbars were causing game to lag need to find fix
         #Fix is to only draw healthbars for enemies after they have been hit and only for 1.5 seconds after the hit
         for enemySprite in self.enemySprites:
-            if enemySprite.getHealth() < enemySprite.getMaxHealth() and enemySprite.getLastHit() + 1.5 > time.time():
+            if enemySprite.getHealth() < enemySprite.getMaxHealth() and enemySprite.getLastHit() + 1.5 > time():
                 DrawHealthBars.drawHealthBars(enemySprite)
 
         DrawHealthBars.drawHealthBars(self.playerSprite[0])
