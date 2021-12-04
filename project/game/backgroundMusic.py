@@ -17,10 +17,10 @@ class BackgroundMusic():
             self.playing = arcade.play_sound(self.startmusic, volume = .3, looping = True)
             self.id = soundID
         elif soundID == 1:
-            self.playing = arcade.play_sound(self.backgroundmusic, volume = .3, looping = True)
+            self.playing = arcade.play_sound(self.backgroundmusic, volume = .2, looping = True)
             self.id = soundID
         elif soundID == 2:
-            self.playing = arcade.play_sound(self.bossmusic, volume = .3, looping = True)
+            self.playing = arcade.play_sound(self.bossmusic, volume = .2, looping = True)
             self.id = soundID
         elif soundID == 3:
             self.playing = arcade.play_sound(self.endmusic, volume = .3, looping = True)

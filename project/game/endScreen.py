@@ -11,9 +11,9 @@ class EndScreen(arcade.View):
         self.texture = arcade.load_texture(const.RESOURCE_PATH + "game_over.png")
         
     def on_update(self, delta_time: float):
-        if (self.director.level >= 100 or self.director.level == 1) and self.director.backgroundmusic.getPlayingID() != 4:
+        if (self.director.level >= 500 or self.director.level == 1) and self.director.backgroundmusic.getPlayingID() != 4:
             self.director.backgroundmusic.play(4)
-        elif self.director.level < 100 and self.director.level != 1 and self.director.backgroundmusic.getPlayingID() != 3:
+        elif self.director.level < 500 and self.director.level != 1 and self.director.backgroundmusic.getPlayingID() != 3:
             self.director.backgroundmusic.play(3)
         self.scroll_to_start
 
