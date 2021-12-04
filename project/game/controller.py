@@ -1,9 +1,9 @@
 import arcade
 import time
 import math
-
-from pyglet.media import player
 from game.endScreen import EndScreen
+from game.spawnGrenadeSprite import SpawnGrenade
+
 
 class Controller():
     def keyevent(director, symbol, playerDeath = False):
@@ -31,6 +31,8 @@ class Controller():
             director.ult[0] = not director.ult[0]
             if director.ult[1] != 1:
                 director.ult[1] = time.time()
+        elif symbol == arcade.key.W:
+            director.grenade[0] = not director.grenade[0]
 
     def keyremoveevent(director, symbol):
         if symbol == arcade.key.TAB:
@@ -61,13 +63,17 @@ class Controller():
             director.player.angle = math.atan2(y - director.player.center_y, x - director.player.center_x) * 180 / math.pi
             
             #Spawns the projectiles
-            if button == arcade.MOUSE_BUTTON_LEFT:
+            if button == arcade.MOUSE_BUTTON_LEFT and not director.grenade[0]:
                 if director.q.shoot(director, x, y, director.player.center_y, director.player.center_x):
                     if director.q.getStance() == 0:
                         arcade.play_sound(director.gunSound, volume= .2)
                     else:
-                        arcade.play_sound(director.shotgunSound, volume= .1)
+                        arcade.play_sound(director.shotgunSound, volume= .25)
                 if director.doubleDamage[0] and director.doubleDamage[1] != 1:
                     director.q.shoot(director, x, y, director.player.center_y, director.player.center_x)
                     if director.q.shotsLeft[director.q.stance] != 0:
                         director.q.shotsLeft[director.q.stance] += 1
+            elif button == arcade.MOUSE_BUTTON_LEFT and director.grenade[0] and director.grenade[1] > 0:
+                director.grenade[1] -= 1
+                SpawnGrenade.spawnGrenade(director, x, y)
+                director.grenade[0] = False

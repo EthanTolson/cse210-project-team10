@@ -38,6 +38,7 @@ class Director(arcade.View):
         self.pauseBool = False
         self.doubleDamage = [False, 0]
         self.ult = [False, 0]
+        self.grenade = [False, 2]
         self.deathsound = arcade.Sound(const.RESOURCE_PATH + "zombiedeathsound.mp3")
         self.levelup = arcade.Sound(const.RESOURCE_PATH + "levelup.mp3")
         self.gunSound = arcade.Sound(const.RESOURCE_PATH + "gunshot.mp3")
@@ -53,6 +54,8 @@ class Director(arcade.View):
         if self.doubleDamage[1] + 5 <= time.time() and self.doubleDamage[1] != 0:
             self.doubleDamage[1] = 1
             self.doubleDamage[0] = False
+        if self.grenade[1] <= 0:
+            self.grenade[0] = False
         if not self.pauseBool:
             self.physicsEngine.update()
             if self.ult[1] + 1.5 < time.time() and (self.ult[1] == 0 or self.ult[1] == 1):
@@ -72,6 +75,7 @@ class Director(arcade.View):
                     self.levelup.play(.7)
                 self.doubleDamage = [False, 0]
                 self.ult = [False, 0]
+                self.grenade = [False, 2]
                 self.level += 1
                 SpawnEnemies.spawnEnemies(self)
                 self.player.setEnemySprites(self.enemySprites)
