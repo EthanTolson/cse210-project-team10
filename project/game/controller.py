@@ -12,7 +12,7 @@ from game.spawnGrenadeSprite import SpawnGrenade
 class Controller():
     def keyevent(director, symbol, playerDeath = False):
         if symbol == key.F:
-                    director.window.set_fullscreen(not director.window.fullscreen)
+            director.window.set_fullscreen(not director.window.fullscreen)
         elif symbol == key.ESCAPE:
             director.pauseBool = True
             if director.level == 1 and not playerDeath:

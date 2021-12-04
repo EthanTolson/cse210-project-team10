@@ -1,6 +1,5 @@
-import arcade
-import math
-import time
+from arcade import Sprite
+from math import sqrt
 """
 Projectile Class:
 Subclass of Arcade Sprite. Used for Projectiles.
@@ -11,7 +10,7 @@ Attributes:
     enemySprites (SpriteList) List of enemy sprites
 """
 
-class ProjectileSprite(arcade.Sprite):
+class ProjectileSprite(Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
         self.positionUsedX = None
@@ -22,7 +21,7 @@ class ProjectileSprite(arcade.Sprite):
 
     def update(self):
         super().update()
-        if math.sqrt((self.positionUsedY - self.center_y)**2 + (self.positionUsedX - self.center_x)**2) > 600:
+        if sqrt((self.positionUsedY - self.center_y)**2 + (self.positionUsedX - self.center_x)**2) > 600:
             self.remove_from_sprite_lists()
 
         collisionList = self.collides_with_list(self.spriteList)

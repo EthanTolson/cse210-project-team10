@@ -1,4 +1,5 @@
-import arcade
+from arcade import load_texture
+from arcade import play_sound
 from math import sqrt
 from math import atan2
 from math import sin
@@ -15,12 +16,12 @@ class QAbility():
 
         if self.stance != 1:
             self.stance += 1
-            texture = arcade.load_texture(const.RESOURCE_PATH + f"playerPNG{self.stance + 1}.png")
+            texture = load_texture(const.RESOURCE_PATH + f"playerPNG{self.stance + 1}.png")
             player.texture = texture
 
         else:
             self.stance = 0
-            texture = arcade.load_texture(const.RESOURCE_PATH + f"playerPNG{self.stance + 1}.png")
+            texture = load_texture(const.RESOURCE_PATH + f"playerPNG{self.stance + 1}.png")
             player.texture = texture
 
     def getShotsLeft(self):
@@ -28,7 +29,7 @@ class QAbility():
 
     def shoot(self, director, x, y, playery = 0, playerx = 0):
         if self.shotsLeft[0] == 0:
-            arcade.play_sound(director.reloadSound , .4)
+            play_sound(director.reloadSound , .4)
             self.shotsLeft = [30, 20]
 
         

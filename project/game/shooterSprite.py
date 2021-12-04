@@ -1,6 +1,8 @@
-import arcade
-import math
-import time
+from arcade import Sprite
+from math import sqrt
+from math import atan2
+from math import pi
+from time import time
 from game.spawnEnemyProjectiles import SpawnEnemyProjectiles
 
 """
@@ -12,7 +14,7 @@ Attributes:
     player (PlayerSprite) Sprite object for player
 """
 
-class ShooterSprite(arcade.Sprite):
+class ShooterSprite(Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
         self.hitPoints = 3
@@ -25,16 +27,16 @@ class ShooterSprite(arcade.Sprite):
         
     def update(self):
         super().update()
-        if self.lastShot + 1 < time.time():
-            self.change_x = 5 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-            self.change_y = 5 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        if self.lastShot + 1 < time():
+            self.change_x = 5 * (( self.player.center_x - self.center_x ) / sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+            self.change_y = 5 * (( self.player.center_y - self.center_y ) / sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
         else:
             self.change_x = 0
             self.change_y = 0
 
-        self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
-        if math.sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) < 500 and self.lastShot + 1 < time.time():
-            self.lastShot = time.time()
+        self.angle = atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / pi
+        if sqrt((self.center_y - self.player.center_y)**2 + (self.center_x - self.player.center_x)**2) < 500 and self.lastShot + 1 < time():
+            self.lastShot = time()
             SpawnEnemyProjectiles.spawnProjectiles(self.director, self.center_x, self.center_y, self)
         if self.hitPoints <= 0:
             self.director.score += self.points

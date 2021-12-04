@@ -1,5 +1,7 @@
-import arcade
-import math
+from arcade import Sprite
+from math import sqrt
+from math import atan2
+from math import pi
 
 """
 HeavySprite Class:
@@ -10,7 +12,7 @@ Attributes:
     player (PlayerSprite) Sprite object for player
 """
 
-class HeavySprite(arcade.Sprite):
+class HeavySprite(Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
         self.hitPoints = 9
@@ -22,9 +24,9 @@ class HeavySprite(arcade.Sprite):
         
     def update(self):
         super().update()
-        self.change_x = 3 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-        self.change_y = 3 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-        self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
+        self.change_x = 3 * (( self.player.center_x - self.center_x ) / sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        self.change_y = 3 * (( self.player.center_y - self.center_y ) / sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+        self.angle = atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / pi
         if self.hitPoints <= 0:
             self.director.score += self.points
             if len(self.director.enemySprites) != 1:

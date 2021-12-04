@@ -1,4 +1,4 @@
-import arcade
+from arcade import Sprite
 from time import time
 from math import sqrt
 from math import atan2
@@ -8,7 +8,7 @@ from math import pi
 from game import constants as const
 from game.projectile import ProjectileSprite
 
-class GrenadeSprite(arcade.Sprite):
+class GrenadeSprite(Sprite):
     def __init__(self, director):
         super().__init__(const.RESOURCE_PATH + "grenadePNG.png", const.SCALING)
         self.director = director

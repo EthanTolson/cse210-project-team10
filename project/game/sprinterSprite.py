@@ -1,6 +1,6 @@
-import arcade
+from arcade import Sprite
 import math
-import time
+from time import time
 
 """
 SprinterSprite Class:
@@ -11,13 +11,13 @@ Attributes:
     player (PlayerSprite) Sprite object for player
 """
 
-class SprinterSprite(arcade.Sprite):
+class SprinterSprite(Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
         self.hitPoints = 2
         self.player = None
         self.damage = 4
-        self.starttime = time.time()
+        self.starttime = time()
         self.lastHit = 9999999
         self.director = None
         self.points = 15
@@ -64,9 +64,9 @@ class SprinterSprite(arcade.Sprite):
         self.director = director
 
     def onCollision(self):
-        if self.starttime + 1 < time.time():
+        if self.starttime + 1 < time():
             if(self.collides_with_sprite(self.player)):
-                self.starttime = time.time()
+                self.starttime = time()
                 return True
             return False
         else:
