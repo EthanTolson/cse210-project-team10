@@ -14,7 +14,7 @@ class SpawnProjectiles():
             distance = sqrt((x - playerx) ** 2 + (y - playery) ** 2)
             radconversion = pi / 180
 
-            projectile = ProjectileSprite("".join([RESOURCE_PATH, "projectilePNG.png"]), 1/8 * SCALING)
+            projectile = ProjectileSprite(f"{RESOURCE_PATH}projectilePNG.png", 1/8 * SCALING)
             projectile.setPositionUsed(playerx, playery)
             projectile.setSpriteList(director.enemySprites)
             

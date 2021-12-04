@@ -4,11 +4,11 @@ from game.constants import RESOURCE_PATH
 
 class BackgroundMusic():
     def __init__(self):
-        self.startmusic = Sound("".join([RESOURCE_PATH, "startmusic.mp3"]))
-        self.bossmusic = Sound("".join([RESOURCE_PATH, "bossmusic.mp3"]))
-        self.endmusic = Sound("".join([RESOURCE_PATH, "endmusic.mp3"]))
-        self.endmusic1 = Sound("".join([RESOURCE_PATH, "endmusic1.mp3"]))
-        self.backgroundmusic = Sound("".join([RESOURCE_PATH, "backgroundmusic.mp3"]))
+        self.startmusic = Sound(f"{RESOURCE_PATH}startmusic.mp3")
+        self.bossmusic = Sound(f"{RESOURCE_PATH}bossmusic.mp3")
+        self.endmusic = Sound(f"{RESOURCE_PATH}endmusic.mp3")
+        self.endmusic1 = Sound(f"{RESOURCE_PATH}endmusic1.mp3")
+        self.backgroundmusic = Sound(f"{RESOURCE_PATH}backgroundmusic.mp3")
         self.playing = None
         self.id = 0
 

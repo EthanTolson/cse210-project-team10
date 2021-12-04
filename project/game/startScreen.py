@@ -17,10 +17,10 @@ class StartScreen(View):
     def __init__(self):
         super().__init__()
         self.camera_sprites = Camera(self.window.width, self.window.height)
-        self.helpscreen = load_texture(RESOURCE_PATH + "helpPNG.png")
-        self.tileMap = load_tilemap(RESOURCE_PATH + "background.json", 2)
+        self.helpscreen = load_texture(f"{RESOURCE_PATH}helpPNG.png")
+        self.tileMap = load_tilemap(f"{RESOURCE_PATH}background.json", 2)
         self.scene = Scene.from_tilemap(self.tileMap)
-        self.player = Sprite(RESOURCE_PATH + "playerPNG1.png", SCALING)
+        self.player = Sprite(f"{RESOURCE_PATH}playerPNG1.png", SCALING)
         self.player.center_x = 1600
         self.player.center_y = 1600
         self.i = 0

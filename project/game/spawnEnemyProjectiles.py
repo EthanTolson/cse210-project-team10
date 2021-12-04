@@ -15,7 +15,7 @@ class SpawnEnemyProjectiles():
             distance = sqrt((x - playerx) ** 2 + (y - playery) ** 2)
             radconversion = pi / 180
 
-            projectile = ProjectileSprite("".join([RESOURCE_PATH, "enemyProjectilePNG.png"]), 3/16 * SCALING)
+            projectile = ProjectileSprite(f"{RESOURCE_PATH}enemyProjectilePNG.png", 3/16 * SCALING)
             projectile.setPositionUsed(shooterx, shootery)
             projectile.setSpriteList(director.playerSprite)
             
@@ -29,7 +29,7 @@ class SpawnEnemyProjectiles():
             director.allSprites.append(projectile)
 
             if shooterSprite.damage == 7:
-                projectile = ProjectileSprite(RESOURCE_PATH + "enemyProjectilePNG.png", 3/16 * SCALING)
+                projectile = ProjectileSprite(f"{RESOURCE_PATH}enemyProjectilePNG.png", 3/16 * SCALING)
                 projectile.setPositionUsed(shooterx, shootery)
                 projectile.setSpriteList(director.playerSprite)
                 

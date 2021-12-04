@@ -9,7 +9,7 @@ class EndScreen(View):
         super().__init__()
         self.camera_sprites = Camera(self.window.width, self.window.height)
         self.director = None
-        self.texture = load_texture("".join([RESOURCE_PATH, "game_over.png"]))
+        self.texture = load_texture(f"{RESOURCE_PATH}game_over.png")
         
     def on_update(self, delta_time: float):
         level = self.director.level

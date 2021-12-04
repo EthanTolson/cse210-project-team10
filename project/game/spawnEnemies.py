@@ -10,7 +10,7 @@ from game.constants import RESOURCE_PATH, SCALING
 class SpawnEnemies():
 
     def spawnShooterBoss(director, player, enemies, all):
-        enemy = BossShooterSprite("".join([RESOURCE_PATH, "robotbossPNG.png"]), SCALING + .5) 
+        enemy = BossShooterSprite(f"{RESOURCE_PATH}robotbossPNG.png", SCALING + .5) 
         enemy.center_x = randint(0, 6200)
         enemy.center_y = 6220
         enemy.setPlayer(player)
@@ -19,7 +19,7 @@ class SpawnEnemies():
         all.append(enemy)
 
     def spawnShooter(director, player, enemies, all):
-        enemy = ShooterSprite("".join([RESOURCE_PATH, "shooterPNG.png"]), SCALING) 
+        enemy = ShooterSprite(f"{RESOURCE_PATH}shooterPNG.png", SCALING) 
         enemy.center_x = randint(0, 6400)
         enemy.center_y = randrange(-50, 6450, 6489)
         enemy.setPlayer(player)
@@ -28,7 +28,7 @@ class SpawnEnemies():
         all.append(enemy)
 
     def spawnBoss(director, player, enemies, all):
-        enemy = BossSprite("".join([RESOURCE_PATH, "bossPNG.png"]), SCALING + 1.0) 
+        enemy = BossSprite(f"{RESOURCE_PATH}bossPNG.png", SCALING + 1.0) 
         enemy.center_x = randint(0, 6200)
         enemy.center_y = 6220
         enemy.setPlayer(player)
@@ -37,7 +37,7 @@ class SpawnEnemies():
         all.append(enemy)
 
     def spawnHeavy(director, player, enemies, all):
-        enemy = HeavySprite("".join([RESOURCE_PATH, "heavyPNG.png"]), SCALING + 1.0) 
+        enemy = HeavySprite(f"{RESOURCE_PATH}heavyPNG.png", SCALING + 1.0) 
         enemy.center_x = randrange(-50, 6450, 6489)
         enemy.center_y = randint(0, 6400)
         enemy.setPlayer(player)
@@ -46,7 +46,7 @@ class SpawnEnemies():
         all.append(enemy)
 
     def spawnZombieTB(director, player, enemies, all):
-        enemy = EnemySprite("".join([RESOURCE_PATH, "zombiePNG.png"]), SCALING) 
+        enemy = EnemySprite(f"{RESOURCE_PATH}zombiePNG.png", SCALING) 
         enemy.center_x = randint(0, 6400)
         enemy.center_y = randrange(-50, 6450, 6489)
         enemy.setPlayer(player)
@@ -55,7 +55,7 @@ class SpawnEnemies():
         all.append(enemy)
 
     def spawnZombieLR(director, player, enemies, all):
-        enemy = EnemySprite("".join([RESOURCE_PATH, "zombiePNG.png"]), SCALING) 
+        enemy = EnemySprite(f"{RESOURCE_PATH}zombiePNG.png", SCALING) 
         enemy.center_x = randrange(-50, 6450, 6489)
         enemy.center_y = randint(0, 6400)
         enemy.setPlayer(player)
@@ -64,7 +64,7 @@ class SpawnEnemies():
         all.append(enemy)
 
     def spawnSprinterTB(director, player, enemies, all):
-        enemy = SprinterSprite("".join([RESOURCE_PATH, "sprinterPNG.png"]), SCALING) 
+        enemy = SprinterSprite(f"{RESOURCE_PATH}sprinterPNG.png", SCALING) 
         enemy.center_x = randint(0, 6400)
         enemy.center_y = randrange(-50, 6450, 6489)
         enemy.setPlayer(player)
@@ -73,7 +73,7 @@ class SpawnEnemies():
         all.append(enemy)
 
     def spawnSprinterLR(director, player, enemies, all):
-        enemy = SprinterSprite("".join([RESOURCE_PATH, "sprinterPNG.png"]), SCALING) 
+        enemy = SprinterSprite(f"{RESOURCE_PATH}sprinterPNG.png", SCALING) 
         enemy.center_x = randrange(-50, 6450, 6489)
         enemy.center_y = randint(0, 6400)
         enemy.setPlayer(player)

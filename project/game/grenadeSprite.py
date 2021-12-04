@@ -6,7 +6,7 @@ from game.projectile import ProjectileSprite
 
 class GrenadeSprite(Sprite):
     def __init__(self, director):
-        super().__init__("".join([RESOURCE_PATH, "grenadePNG.png"]), SCALING)
+        super().__init__(f"{RESOURCE_PATH}grenadePNG.png", SCALING)
         self.director = director
         self.time = time()
         self.check = 0
@@ -19,7 +19,7 @@ class GrenadeSprite(Sprite):
             enemies = self.director.enemySprites
             projectiles = self.director.projectileSprites
             all = self.director.allSprites
-            file = "".join([RESOURCE_PATH, "projectilePNG.png"])
+            file = f"{RESOURCE_PATH}projectilePNG.png"
             scaling = 1/8 * SCALING
             distanceshot = sqrt(200)
 

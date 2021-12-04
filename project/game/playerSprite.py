@@ -28,7 +28,7 @@ class PlayerSprite(Sprite):
         self.lastEventX = None
         self.lastEventY = None
         self.hitCount = 0
-        self._moveSound = Sound("".join([RESOURCE_PATH, "footstep1.mp3"]))
+        self._moveSound = Sound(f"{RESOURCE_PATH}footstep1.mp3")
         self._moveSound1 = None
         self.starttime = time()
         self.pause = True

@@ -12,12 +12,12 @@ class QAbility():
 
         if self.stance != 1:
             self.stance += 1
-            texture = load_texture("".join([RESOURCE_PATH, f"playerPNG{self.stance + 1}.png"]))
+            texture = load_texture(f"{RESOURCE_PATH}playerPNG{self.stance + 1}.png")
             player.texture = texture
 
         else:
             self.stance = 0
-            texture = load_texture("".join([RESOURCE_PATH, f"playerPNG{self.stance + 1}.png"]))
+            texture = load_texture(f"{RESOURCE_PATH}playerPNG{self.stance + 1}.png")
             player.texture = texture
 
     def getShotsLeft(self):
