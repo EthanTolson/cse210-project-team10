@@ -1,5 +1,5 @@
 from arcade import Sprite
-import math
+from math import atan2, sqrt, pi
 from time import time
 
 """
@@ -24,13 +24,19 @@ class SprinterSprite(Sprite):
         
     def update(self):
         super().update()
+        playercenterx = self.player.center_x
+        playercentery = self.player.center_y
+        distance = sqrt((self.center_x - playercenterx) ** 2 + (self.center_y - playercentery) ** 2)
+
         if (not self.onCollision()):
-            self.change_x = 6 * (( self.player.center_x - self.center_x ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
-            self.change_y = 6 * (( self.player.center_y - self.center_y ) / math.sqrt((self.center_x-self.player.center_x)**2 + (self.center_y- self.player.center_y)**2))
+            self.change_x = 6 * (( playercenterx - self.center_x ) / distance)
+            self.change_y = 6 * (( playercentery - self.center_y ) / distance)
         else:
             self.change_x = 0
             self.change_y = 0
-        self.angle = math.atan2(self.player.center_y - self.center_y, self.player.center_x - self.center_x) * 180 / math.pi
+
+        self.angle = atan2(playercentery - self.center_y, playercenterx - self.center_x) * 180 / pi
+        
         if self.hitPoints <= 0:
             self.director.score += self.points
             if len(self.director.enemySprites) != 1:

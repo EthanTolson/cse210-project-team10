@@ -1,11 +1,9 @@
-from arcade import Sprite
-from arcade import Sound
-from arcade import key
-from arcade import play_sound
+from arcade import Sprite, Sound, play_sound
+from arcade.key import ESCAPE
 from time import time
 from math import sqrt
 from game.controller import Controller
-from game import constants as const
+from game.constants import RESOURCE_PATH
 """
 PlayerSprite Class:
 Subclass of Arcade Sprite. Used for the Player.
@@ -30,7 +28,7 @@ class PlayerSprite(Sprite):
         self.lastEventX = None
         self.lastEventY = None
         self.hitCount = 0
-        self._moveSound = Sound(const.RESOURCE_PATH + "footstep1.mp3")
+        self._moveSound = Sound("".join([RESOURCE_PATH, "footstep1.mp3"]))
         self._moveSound1 = None
         self.starttime = time()
         self.pause = True
@@ -41,7 +39,7 @@ class PlayerSprite(Sprite):
         if self.change_x == 0 and self.change_y == 0 and self._moveSound1 != None:
             self._moveSound.stop(self._moveSound1)
         if self.player_hp <= 0:
-            Controller.keyevent(self.director, key.ESCAPE, True)
+            Controller.keyevent(self.director, ESCAPE, True)
         for i in range(0, 6):
             if self.lastEventX != None and (self.lastEventX <= self.center_x + i and self.lastEventX \
                 >= self.center_x - i) and(self.lastEventY <= self.center_y + i and self.lastEventY \
@@ -90,8 +88,9 @@ class PlayerSprite(Sprite):
             if self._moveSound1 != None:
                 self._moveSound.stop(self._moveSound1)
             self._moveSound1 = play_sound(self._moveSound, volume = .05, looping = True)
-        self.change_x = 3.5 * ((x- self.center_x ) / sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
-        self.change_y = 3.5 * ((y- self.center_y ) / sqrt((x-self.center_x)**2 + (y- self.center_y)**2))
+        distance = sqrt((x - self.center_x) ** 2 + (y - self.center_y) ** 2)
+        self.change_x = 3.5 * ((x- self.center_x ) / distance)
+        self.change_y = 3.5 * ((y- self.center_y ) / distance)
         self.lastEventY = y
         self.lastEventX = x
         

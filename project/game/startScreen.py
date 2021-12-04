@@ -1,18 +1,8 @@
+from arcade import View, Camera, load_tilemap, load_texture, Scene, Sprite, start_render, draw_text, draw_lrtb_rectangle_outline, draw_lrwh_rectangle_textured, close_window
+from arcade.key import F, ESCAPE, TAB, ENTER
+from arcade.color import BLACK, RED_DEVIL
+from game.constants import RESOURCE_PATH, SCALING
 from game.director import Director
-from arcade import View
-from arcade import Camera
-from arcade import load_tilemap
-from arcade import load_texture
-from arcade import Scene
-from arcade import Sprite
-from arcade import key
-from arcade import color
-from arcade import start_render
-from arcade import draw_text
-from arcade import draw_lrtb_rectangle_outline
-from arcade import draw_lrwh_rectangle_textured
-from arcade import close_window
-from game import constants as const
 from game.backgroundMusic import BackgroundMusic
 
 """
@@ -27,10 +17,10 @@ class StartScreen(View):
     def __init__(self):
         super().__init__()
         self.camera_sprites = Camera(self.window.width, self.window.height)
-        self.helpscreen = load_texture(const.RESOURCE_PATH + "helpPNG.png")
-        self.tileMap = load_tilemap(const.RESOURCE_PATH + "background.json", 2)
+        self.helpscreen = load_texture(RESOURCE_PATH + "helpPNG.png")
+        self.tileMap = load_tilemap(RESOURCE_PATH + "background.json", 2)
         self.scene = Scene.from_tilemap(self.tileMap)
-        self.player = Sprite(const.RESOURCE_PATH + "playerPNG1.png", const.SCALING)
+        self.player = Sprite(RESOURCE_PATH + "playerPNG1.png", SCALING)
         self.player.center_x = 1600
         self.player.center_y = 1600
         self.i = 0
@@ -74,15 +64,21 @@ class StartScreen(View):
         self.scene.draw()
         self.camera_sprites.use()
         self.player.draw()
-        draw_lrtb_rectangle_outline(self.player.center_x -self.window.width /2 + 100, self.player.center_x + self.window.width /2 - 100, self.player.center_y + self.window.height /2 - 100, self.player.center_y - self.window.height /2 + 100,  color = color.BLACK, border_width= 20)
-        draw_text("Zombie Shooter", self.player.center_x-2, self.player.center_y + 60, font_size = 120, anchor_x = "center", color = color.BLACK)   
-        draw_text("Press Enter to Begin", self.player.center_x-2, self.player.center_y - 200, font_size = 75, anchor_x="center", color = color.BLACK)
-        draw_text("Tab: Controls", self.player.center_x-2, self.player.center_y - 300, font_size = 50, anchor_x="center", color = color.BLACK)
-        draw_text("Zombie Shooter", self.player.center_x, self.player.center_y + 60, font_size = 120, anchor_x = "center", color = color.RED_DEVIL)   
-        draw_text("Press Enter to Begin", self.player.center_x, self.player.center_y - 200, font_size = 75, anchor_x="center", color = color.RED_DEVIL)
-        draw_text("Tab: Controls", self.player.center_x, self.player.center_y - 300, font_size = 50, anchor_x="center", color = color.RED_DEVIL)
+
+        playerx, playery = self.player.center_x, self.player.center_y
+        width, height = self.window.width / 2, self.window.height / 2
+        playeroffsetx = playerx - 2
+
+        draw_lrtb_rectangle_outline(playerx - width + 100, playerx + width - 100, playery + height - 100, playery - height + 100,  color = BLACK, border_width = 20)
+        draw_text("Zombie Shooter", playeroffsetx, playery + 60, font_size = 120, anchor_x = "center", color = BLACK)   
+        draw_text("Press Enter to Begin", playeroffsetx, playery - 200, font_size = 75, anchor_x = "center", color = BLACK)
+        draw_text("Tab: Controls", playeroffsetx, playery - 300, font_size = 50, anchor_x = "center", color = BLACK)
+        draw_text("Zombie Shooter", playerx, playery + 60, font_size = 120, anchor_x = "center", color = RED_DEVIL)   
+        draw_text("Press Enter to Begin", playerx, playery - 200, font_size = 75, anchor_x = "center", color = RED_DEVIL)
+        draw_text("Tab: Controls", playerx, playery - 300, font_size = 50, anchor_x = "center", color = RED_DEVIL)
+
         if self.instructions:
-            draw_lrwh_rectangle_textured(self.player.center_x - 300, self.player.center_y - 300, 600, 600, self.helpscreen)
+            draw_lrwh_rectangle_textured(playerx - 300, playery - 300, 600, 600, self.helpscreen)
     
     def scroll_to_player(self):
         """
@@ -96,13 +92,13 @@ class StartScreen(View):
         """
         Checks for key presses and does corresponding action
         """
-        if symbol == key.F:
+        if symbol == F:
             self.window.set_fullscreen(not self.window.fullscreen)
-        elif symbol == key.ESCAPE:
+        elif symbol == ESCAPE:
             close_window()
-        elif symbol == key.TAB:
+        elif symbol == TAB:
             self.instructions = not self.instructions
-        elif symbol == key.ENTER: 
+        elif symbol == ENTER: 
             self.music.play(1)
             gameView = Director()
             gameView.setup(self.music)

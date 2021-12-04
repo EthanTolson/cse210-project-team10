@@ -1,10 +1,6 @@
-from arcade import load_texture
-from arcade import play_sound
-from math import sqrt
-from math import atan2
-from math import sin
-from math import cos
-from game import constants as const
+from arcade import load_texture, play_sound
+from math import sqrt, atan2, sin, cos
+from game.constants import RESOURCE_PATH
 from game.spawnProjectiles import SpawnProjectiles
 
 class QAbility():
@@ -16,12 +12,12 @@ class QAbility():
 
         if self.stance != 1:
             self.stance += 1
-            texture = load_texture(const.RESOURCE_PATH + f"playerPNG{self.stance + 1}.png")
+            texture = load_texture("".join([RESOURCE_PATH, f"playerPNG{self.stance + 1}.png"]))
             player.texture = texture
 
         else:
             self.stance = 0
-            texture = load_texture(const.RESOURCE_PATH + f"playerPNG{self.stance + 1}.png")
+            texture = load_texture("".join([RESOURCE_PATH, f"playerPNG{self.stance + 1}.png"]))
             player.texture = texture
 
     def getShotsLeft(self):
@@ -39,9 +35,11 @@ class QAbility():
                 self.shotsLeft[self.stance] -= 1
                 return True
             elif self.stance == 1:
+                distance = sqrt((x - playerx) ** 2 + (y - playery) ** 2)
+                angle = atan2(y - playery, x - playerx)
                 SpawnProjectiles.spawnProjectiles(director, x, y)
-                SpawnProjectiles.spawnProjectiles(director, cos( atan2(y - playery, x - playerx) + .26799) * sqrt((x - playerx)**2 + (y - playery)**2) + playerx, sin( atan2(y - playery, x - playerx) + .26799) * sqrt((x - playerx)**2 + (y - playery)**2)+ playery)
-                SpawnProjectiles.spawnProjectiles(director, cos( atan2(y - playery, x - playerx) - .26799) * sqrt((x - playerx)**2 + (y - playery)**2) + playerx, sin( atan2(y - playery, x - playerx) - .26799) * sqrt((x - playerx)**2 + (y - playery)**2)+ playery)
+                SpawnProjectiles.spawnProjectiles(director, cos(angle + .26799) * distance + playerx, sin(angle + .26799) * distance + playery)
+                SpawnProjectiles.spawnProjectiles(director, cos(angle - .26799) * distance + playerx, sin(angle - .26799) * distance + playery)
                 self.shotsLeft[self.stance] -= 1
                 return True
         else:
