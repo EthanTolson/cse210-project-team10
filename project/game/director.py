@@ -75,7 +75,10 @@ class Director(arcade.View):
                     self.levelup.play(.7)
                 self.doubleDamage = [False, 0]
                 self.ult = [False, 0]
-                self.grenade = [False, 2]
+                if self.level > 50:
+                    self.grenade = [False, 12]
+                else:
+                    self.grenade = [False, 2 + int(self.level/5)]
                 self.level += 1
                 SpawnEnemies.spawnEnemies(self)
                 self.player.setEnemySprites(self.enemySprites)
