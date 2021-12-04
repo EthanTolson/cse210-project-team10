@@ -52,12 +52,12 @@ class Director(View):
         self.doubleDamage = [False, 0]
         self.ult = [False, 0]
         self.grenade = [False, 2]
-        self.deathsound = Sound(const.RESOURCE_PATH + "zombiedeathsound.mp3")
-        self.levelup = Sound(const.RESOURCE_PATH + "levelup.mp3")
-        self.gunSound = Sound(const.RESOURCE_PATH + "gunshot.mp3")
-        self.shotgunSound = Sound(const.RESOURCE_PATH + "shotgunshot.mp3")
-        self.reloadSound = Sound(const.RESOURCE_PATH + "reload.mp3")
-        self.helpscreen = load_texture(const.RESOURCE_PATH + "helpPNG.png")        
+        self.deathsound = Sound("".join([const.RESOURCE_PATH, "zombiedeathsound.mp3"]))
+        self.levelup = Sound("".join([const.RESOURCE_PATH, "levelup.mp3"]))
+        self.gunSound = Sound("".join([const.RESOURCE_PATH, "gunshot.mp3"]))
+        self.shotgunSound = Sound("".join([const.RESOURCE_PATH, "shotgunshot.mp3"]))
+        self.reloadSound = Sound("".join([const.RESOURCE_PATH, "reload.mp3"]))
+        self.helpscreen = load_texture("".join([const.RESOURCE_PATH, "helpPNG.png"]))        
 
     def on_update(self, delta_time: float):
         """
@@ -188,7 +188,7 @@ class Director(View):
         Setup for before first update cycle
         creates the player object
         """
-        self.player = PlayerSprite(const.RESOURCE_PATH + "playerPNG1.png", const.SCALING) 
+        self.player = PlayerSprite("".join([const.RESOURCE_PATH,"playerPNG1.png"]), const.SCALING) 
         self.player.center_x = 3200
         self.player.center_y = 3200
         self.score = 0
@@ -200,7 +200,7 @@ class Director(View):
                 "use_spatial_hash": True,
             }
         }
-        self.tileMap = load_tilemap(const.RESOURCE_PATH + "background.json", 2, layer_options)
+        self.tileMap = load_tilemap("".join([const.RESOURCE_PATH,"background.json"]), 2, layer_options)
         self.backgroundmusic = music
         self.player.setDirector(self)
         self.scene = Scene.from_tilemap(self.tileMap)
