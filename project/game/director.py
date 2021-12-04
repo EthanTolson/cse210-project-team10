@@ -4,6 +4,7 @@ from game import constants as const
 from game.controller import Controller
 from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
+from game.hud import drawHUD
 from game.spawnEnemies import SpawnEnemies
 from game.qAbility import QAbility
 """
@@ -103,11 +104,13 @@ class Director(arcade.View):
 
         arcade.draw_lrtb_rectangle_outline(-500, 6900, 6900, -500, arcade.color.BLACK, 1000)  
 
+        drawHUD.drawHUD(self)
+
         if self.help_bool or self.pauseBool:
             arcade.draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 -10,
             self.player.center_y - 200, 600 , 600, texture = self.helpscreen)
 
-        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left: {self.q.getShotsLeft()} | E: {self.doubleDamage[0]} | R: {self.ult[0]} | TAB: Show Controls/Help",
+        arcade.draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | Ammo Left: {self.q.getShotsLeft()} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
          self.player.center_y - self.window.height/2 + 20, 
          arcade.color.WHITE, 14)   
