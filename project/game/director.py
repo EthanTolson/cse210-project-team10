@@ -1,4 +1,4 @@
-from arcade import SpriteList, View, Camera, Sound, Scene, PhysicsEngineSimple, load_texture, start_render, draw_text, draw_lrwh_rectangle_textured, draw_lrtb_rectangle_outline, load_tilemap
+from arcade import SpriteList, View, Camera, Sound, Scene, load_texture, start_render, draw_text, draw_lrwh_rectangle_textured, draw_lrtb_rectangle_outline, load_tilemap
 from arcade.key import ESCAPE
 from arcade.color import GRAPE, BLACK, WHITE
 from time import time
@@ -58,7 +58,6 @@ class Director(View):
         if self.grenade[1] <= 0:
             self.grenade[0] = False
         if not self.pauseBool:
-            self.physicsEngine.update()
             if self.ult[1] + 1.5 < time() and (self.ult[1] == 0 or self.ult[1] == 1):
                 self.ult[0] = False
                 self.enemySprites.update()
@@ -184,13 +183,7 @@ class Director(View):
         self.playerSprite.append(self.player)     
         self.allSprites.append(self.player)
         self.q = QAbility()
-        layer_options = {
-            "walls": {
-                "use_spatial_hash": True,
-            }
-        }
-        self.tileMap = load_tilemap(f"{RESOURCE_PATH}background.json", 2, layer_options)
+        self.tileMap = load_tilemap(f"{RESOURCE_PATH}background.json", 2)
         self.backgroundmusic = music
         self.player.setDirector(self)
         self.scene = Scene.from_tilemap(self.tileMap)
-        self.physicsEngine = PhysicsEngineSimple(self.player, self.scene["walls"])

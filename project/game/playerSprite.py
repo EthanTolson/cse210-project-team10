@@ -89,8 +89,8 @@ class PlayerSprite(Sprite):
                 self._moveSound.stop(self._moveSound1)
             self._moveSound1 = play_sound(self._moveSound, volume = .05, looping = True)
         distance = sqrt((x - self.center_x) ** 2 + (y - self.center_y) ** 2)
-        self.change_x = 3.5 * ((x- self.center_x ) / distance)
-        self.change_y = 3.5 * ((y- self.center_y ) / distance)
+        self.change_x = 7 * ((x- self.center_x ) / distance)
+        self.change_y = 7 * ((y- self.center_y ) / distance)
         self.lastEventY = y
         self.lastEventX = x
         
