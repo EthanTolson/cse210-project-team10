@@ -40,7 +40,7 @@ class PlayerSprite(Sprite):
             self._moveSound.stop(self._moveSound1)
         if self.player_hp <= 0:
             Controller.keyevent(self.director, ESCAPE, True)
-        for i in range(0, 6):
+        for i in range(0, 10):
             if self.lastEventX != None and (self.lastEventX <= self.center_x + i and self.lastEventX \
                 >= self.center_x - i) and(self.lastEventY <= self.center_y + i and self.lastEventY \
                     >= self.center_y - i):

@@ -33,7 +33,7 @@ class Director(View):
         self.allSprites = SpriteList(use_spatial_hash = False)
         self.camera_sprites = Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 213
+        self.level = 0
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -108,7 +108,6 @@ class Director(View):
 
         self.camera_sprites.use()
         self.allSprites.draw()
-
         draw_lrtb_rectangle_outline(-500, 6900, 6900, -500, BLACK, 1000)  
 
         drawHUD.drawHUD(self)
