@@ -27,13 +27,13 @@ Attributes:
 class Director(View):
     def __init__(self):
         super().__init__()
-        self.playerSprite = SpriteList()
-        self.enemySprites = SpriteList()
-        self.projectileSprites = SpriteList()
-        self.allSprites = SpriteList()
+        self.playerSprite = SpriteList(use_spatial_hash = False)
+        self.enemySprites = SpriteList(use_spatial_hash = False)
+        self.projectileSprites = SpriteList(use_spatial_hash = False)
+        self.allSprites = SpriteList(use_spatial_hash = False)
         self.camera_sprites = Camera(self.window.width, self.window.height)
         self.tileMap = None
-        self.level = 0
+        self.level = 213
         self.lastEventX = 0
         self.lastEventY = 0
         self.help_bool = False
@@ -157,10 +157,10 @@ class Director(View):
         self.deathsound.play(.15)
 
     def reset(self, music):
-        self.playerSprite = SpriteList()
-        self.enemySprites = SpriteList()
-        self.projectileSprites = SpriteList()
-        self.allSprites = SpriteList()
+        self.playerSprite = SpriteList(use_spatial_hash = False)
+        self.enemySprites = SpriteList(use_spatial_hash = False)
+        self.projectileSprites = SpriteList(use_spatial_hash = False)
+        self.allSprites = SpriteList(use_spatial_hash = False)
         self.camera_sprites = Camera(self.window.width, self.window.height)
         self.level = 0
         self.lastEventX = 0
