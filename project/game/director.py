@@ -113,8 +113,8 @@ class Director(View):
         drawHUD.drawHUD(self)
 
         if self.help_bool or self.pauseBool:
-            draw_lrwh_rectangle_textured(self.player.center_x - self.window.width/4 - 10,
-            self.player.center_y - 200, 600 , 600, texture = self.helpscreen)
+            draw_lrwh_rectangle_textured(self.player.center_x - 300,
+            self.player.center_y - 300, 600 , 600, texture = self.helpscreen)
 
         draw_text(f"Level: {self.level} | Score: {self.score} | Zombies Left: {len(self.enemySprites)} | TAB: Show Controls/Help",
          self.player.center_x - self.window.width/2 + 10, 
