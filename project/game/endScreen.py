@@ -47,7 +47,9 @@ class EndScreen(View):
         draw_text("Esc: Quit Game", x, y - 300, font_size = 75, anchor_x = "center")
         draw_text(f"Score: {score}", x, y + 200, font_size = 75, anchor_x = "center")
         draw_text(f"Level: {abs(level)}", x, y + 300, font_size = 75, anchor_x = "center")
-
+        draw_text("Ethan Tolson, Stephen Nielsen, Jace Wilderman, Dawsin Miskin, Austin Eldredge", x - 2, 10, font_size = 25, color = BLACK, anchor_x = "center")
+        draw_text("Ethan Tolson, Stephen Nielsen, Jace Wilderman, Dawsin Miskin, Austin Eldredge", x, 10, font_size = 25, anchor_x = "center")
+        
     def on_key_press(self, symbol: int, modifiers: int):
         """
         Checks for key presses and does corresponding action

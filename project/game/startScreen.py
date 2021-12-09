@@ -70,10 +70,10 @@ class StartScreen(View):
         playeroffsetx = playerx - 2
 
         draw_lrtb_rectangle_outline(playerx - width + 100, playerx + width - 100, playery + height - 100, playery - height + 100,  color = BLACK, border_width = 20)
-        draw_text("Zombie Shooter", playeroffsetx, playery + 60, font_size = 120, anchor_x = "center", color = BLACK)   
+        draw_text("Last Stand", playeroffsetx, playery + 60, font_size = 120, anchor_x = "center", color = BLACK)   
         draw_text("Press Enter to Begin", playeroffsetx, playery - 200, font_size = 75, anchor_x = "center", color = BLACK)
         draw_text("Tab: Controls", playeroffsetx, playery - 300, font_size = 50, anchor_x = "center", color = BLACK)
-        draw_text("Zombie Shooter", playerx, playery + 60, font_size = 120, anchor_x = "center", color = RED_DEVIL)   
+        draw_text("Last Stand", playerx, playery + 60, font_size = 120, anchor_x = "center", color = RED_DEVIL)   
         draw_text("Press Enter to Begin", playerx, playery - 200, font_size = 75, anchor_x = "center", color = RED_DEVIL)
         draw_text("Tab: Controls", playerx, playery - 300, font_size = 50, anchor_x = "center", color = RED_DEVIL)
 
