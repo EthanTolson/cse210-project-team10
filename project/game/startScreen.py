@@ -1,8 +1,9 @@
 from arcade import View, Camera, load_tilemap, load_texture, Scene, Sprite, start_render, draw_text, draw_lrtb_rectangle_outline, draw_lrwh_rectangle_textured, close_window
-from arcade.key import F, ESCAPE, TAB, ENTER
+from arcade.key import F, ESCAPE, TAB, ENTER, M
 from arcade.color import BLACK, RED_DEVIL
 from game.constants import RESOURCE_PATH, SCALING
 from game.director import Director
+from game.wasddirector import WASDDirector
 from game.backgroundMusic import BackgroundMusic
 
 """
@@ -18,6 +19,7 @@ class StartScreen(View):
         super().__init__()
         self.camera_sprites = Camera(self.window.width, self.window.height)
         self.helpscreen = load_texture(f"{RESOURCE_PATH}helpPNG.png")
+        self.wasdhelpscreen = load_texture(f"{RESOURCE_PATH}Helpmenuvideogamewasd.png")
         self.tileMap = load_tilemap(f"{RESOURCE_PATH}background.json", 2)
         self.scene = Scene.from_tilemap(self.tileMap)
         self.player = Sprite(f"{RESOURCE_PATH}playerPNG1.png", SCALING)
@@ -29,6 +31,7 @@ class StartScreen(View):
         self.instructions = False
         self.music = BackgroundMusic()
         self.music.play(0)
+        self.wasdBool = False
 
     def on_update(self, delta_time: float):
         self.mapViewLoop()
@@ -70,15 +73,23 @@ class StartScreen(View):
         playeroffsetx = playerx - 2
 
         draw_lrtb_rectangle_outline(playerx - width + 100, playerx + width - 100, playery + height - 100, playery - height + 100,  color = BLACK, border_width = 20)
+
+        if self.wasdBool:
+            draw_text("WASD Controls", playeroffsetx, playery - 60, font_size = 50, anchor_x = "center", color = BLACK)
+        else:
+            draw_text("Mouse Controls", playeroffsetx, playery - 60, font_size = 50, anchor_x = "center", color = BLACK)
+
         draw_text("Last Stand", playeroffsetx, playery + 60, font_size = 120, anchor_x = "center", color = BLACK)   
         draw_text("Press Enter to Begin", playeroffsetx, playery - 200, font_size = 75, anchor_x = "center", color = BLACK)
-        draw_text("Tab: Controls", playeroffsetx, playery - 300, font_size = 50, anchor_x = "center", color = BLACK)
+        draw_text("Tab: Controls - M - Switch Controls", playeroffsetx, playery - 300, font_size = 50, anchor_x = "center", color = BLACK)
         draw_text("Last Stand", playerx, playery + 60, font_size = 120, anchor_x = "center", color = RED_DEVIL)   
         draw_text("Press Enter to Begin", playerx, playery - 200, font_size = 75, anchor_x = "center", color = RED_DEVIL)
-        draw_text("Tab: Controls", playerx, playery - 300, font_size = 50, anchor_x = "center", color = RED_DEVIL)
+        draw_text("Tab: Controls - M - Switch Controls", playerx, playery - 300, font_size = 50, anchor_x = "center", color = RED_DEVIL)
 
-        if self.instructions:
+        if self.instructions and not self.wasdBool:
             draw_lrwh_rectangle_textured(playerx - 300, playery - 300, 600, 600, self.helpscreen)
+        elif self.instructions and self.wasdBool:
+            draw_lrwh_rectangle_textured(playerx - 300, playery - 300, 600, 600, self.wasdhelpscreen)
     
     def scroll_to_player(self):
         """
@@ -98,16 +109,21 @@ class StartScreen(View):
             close_window()
         elif symbol == TAB:
             self.instructions = not self.instructions
+        elif symbol == M:
+            self.wasdBool = not self.wasdBool
         elif symbol == ENTER: 
             self.music.play(1)
-            gameView = Director()
-            gameView.setup(self.music)
-            self.window.show_view(gameView)
+            if not self.wasdBool:
+                gameView = Director()
+                gameView.setup(self.music)
+                self.window.show_view(gameView)
+            else:
+                gameView = WASDDirector()
+                gameView.setup(self.music)
+                self.window.show_view(gameView)
 
     def on_resize(self, width: int, height: int):
         """
         Ensures camera works if user resizes screen
         """
         self.camera_sprites.resize(int(width), int(height))
-
-    
