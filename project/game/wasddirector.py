@@ -6,7 +6,7 @@ from game.constants import RESOURCE_PATH, SCALING
 from game.wasdcontroller import WASDController
 from game.playerSprite import PlayerSprite
 from game.drawHealthbars import DrawHealthBars
-from game.hud import drawHUD
+from game.wasdhud import drawHUD
 from game.spawnEnemies import SpawnEnemies
 from game.qAbility import QAbility
 """
